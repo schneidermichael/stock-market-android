@@ -10,12 +10,14 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActivityAdapter.MyViewHolder> {
     public static final String TAG = "MyAdapter";
 
-
-    private String[] mDataset;
-
+    private JSONArray jsonArray;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -42,9 +44,10 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StockListActivityAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public StockListActivityAdapter(JSONArray myDataset) {
+        jsonArray = myDataset;
     }
+
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -63,13 +66,18 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textCardView.setText(mDataset[position]);
-
+        JSONObject i = null;
+        try {
+             i = jsonArray.getJSONObject(position);
+            holder.textCardView.setText(i.getString("companyName"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return jsonArray.length();
     }
 }

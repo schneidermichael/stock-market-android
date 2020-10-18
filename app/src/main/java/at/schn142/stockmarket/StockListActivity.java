@@ -6,19 +6,35 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.JsonReader;
 import android.util.Log;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 public class StockListActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
 
-    private static final int DATASET_COUNT = 30;
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    protected String[] mDataset;
+    protected JSONArray jsonArray;
+
+    String result;
+    String outputResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +44,7 @@ public class StockListActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        initDataset();
+        loadWebResult();
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -42,17 +56,77 @@ public class StockListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // specify an adapter
-        mAdapter = new StockListActivityAdapter(mDataset);
-        recyclerView.setAdapter(mAdapter);
-
     }
 
-    private void initDataset() {
-        mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }
+    private void initDataset(JSONArray retrieveStockDataInJSON) {
+
+        jsonArray = retrieveStockDataInJSON;
         Log.d(TAG, "Dateset sucessfully created");
+    }
+
+    private void loadWebResult() {
+        ExampleRunnable runnable = new ExampleRunnable("https://sandbox.iexapis.com/stable/stock/market/list/mostactive?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+        new Thread(runnable).start();
+    }
+
+    private String getResponseFromHttpUrl(URL url) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+        try {
+            urlConnection.setRequestMethod("GET");
+            InputStream in = urlConnection.getInputStream();
+
+            Scanner scanner = new Scanner(in);
+            scanner.useDelimiter("\\A");
+
+            if (scanner.hasNext()) {
+                return scanner.next();
+            } else {
+                return null;
+            }
+        }finally {
+            urlConnection.disconnect();
+        }
+    }
+
+    class ExampleRunnable implements Runnable{
+
+        URL url;
+
+        ExampleRunnable(String urlString){
+            try {
+                url = new URL(urlString);
+            }catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run() {
+            try {
+
+                result = getResponseFromHttpUrl(url);
+                outputResult = "";
+
+                JSONArray retrieveStockDataInJSON = new JSONArray(result);
+
+                Handler mainHandler = new Handler(Looper.getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Initialize dataset, this data would usually come from a local content provider or
+                        // remote server.
+                        initDataset(retrieveStockDataInJSON);
+
+                        // specify an adapter
+                        mAdapter = new StockListActivityAdapter(jsonArray);
+                        recyclerView.setAdapter(mAdapter);
+                    }
+                });
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

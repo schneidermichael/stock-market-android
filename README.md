@@ -9,6 +9,11 @@ The following guides illustrate how to use some features concretely:
 * [Add the app bar](https://developer.android.com/training/appbar)
 * [Search Overview](https://developer.android.com/guide/topics/search)
 
+### API
+
+* [IEX Cloud is a platform that makes financial data and services accessible to everyone](https://iexcloud.io/docs/api/)
+
+
 
 
 

@@ -11,8 +11,6 @@ public class StockListDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_card_view);
 
-
-
     }
 
 }
