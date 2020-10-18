@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+public class StockListActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new MainActivityAdapter(mDataset);
+        mAdapter = new StockListActivityAdapter(mDataset);
         recyclerView.setAdapter(mAdapter);
 
     }

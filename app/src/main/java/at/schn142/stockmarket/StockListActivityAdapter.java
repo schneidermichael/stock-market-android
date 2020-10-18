@@ -1,5 +1,6 @@
 package at.schn142.stockmarket;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyViewHolder> {
+public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActivityAdapter.MyViewHolder> {
     public static final String TAG = "MyAdapter";
 
 
@@ -30,6 +31,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
+                    Intent intent = new Intent (v.getContext(), StockListDetailActivity.class);
+                    v.getContext().startActivity(intent);
                 }
             });
             textCardView = (TextView) c.findViewById(R.id.cardTextView);
@@ -39,17 +42,17 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MainActivityAdapter(String[] myDataset) {
+    public StockListActivityAdapter(String[] myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MainActivityAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                               int viewType) {
+    public StockListActivityAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                    int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_card_view, parent, false);
+                .inflate(R.layout.list_card_view, parent, false);
 
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
