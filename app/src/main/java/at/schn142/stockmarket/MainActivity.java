@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // specify an adapter
         mAdapter = new MainActivityAdapter(mDataset);
         recyclerView.setAdapter(mAdapter);
-        
+
     }
 
     private void initDataset() {
