@@ -8,6 +8,7 @@ The following guides illustrate how to use some features concretely:
 * [Settings](https://developer.android.com/guide/topics/ui/settings)
 * [Add the app bar](https://developer.android.com/training/appbar)
 * [Search Overview](https://developer.android.com/guide/topics/search)
+* [Android Room with a View - Java](https://codelabs.developers.google.com/codelabs/android-room-with-a-view)
 
 ### API
 
