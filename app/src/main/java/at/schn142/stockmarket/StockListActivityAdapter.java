@@ -1,6 +1,7 @@
 package at.schn142.stockmarket;
 
 import android.content.Intent;
+import android.icu.text.DecimalFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import static android.graphics.Color.rgb;
 
 public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActivityAdapter.MyViewHolder> {
     public static final String TAG = "MyAdapter";
+    private static DecimalFormat formatFLoat = new DecimalFormat("0.00");
 
     private JSONArray jsonArray;
 
@@ -76,19 +78,22 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
         // - replace the contents of the view with that element
         JSONObject i = null;
         String changePercent= "";
-
+        Float roundChangePercent;
         try {
             i = jsonArray.getJSONObject(position);
             holder.textCardViewSymbol.setText(i.getString("symbol"));
             holder.textCardViewCompanyName.setText(i.getString("companyName"));
             holder.textCardViewLatestPrice.setText(i.getString("latestPrice"));
             changePercent = i.getString("changePercent");
+            changePercent = String.valueOf(formatFLoat.format(Float.parseFloat(changePercent)));
+
             if(changePercent.charAt(0)== '-'){
                 holder.textCardViewChangePercent.setBackgroundColor(rgb(243,17,0));
+                holder.textCardViewChangePercent.setText(changePercent);
             }else{
                 holder.textCardViewChangePercent.setBackgroundColor(rgb(76,175,80));
+                holder.textCardViewChangePercent.setText("+"+changePercent);
             }
-            holder.textCardViewChangePercent.setText(i.getString("changePercent"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

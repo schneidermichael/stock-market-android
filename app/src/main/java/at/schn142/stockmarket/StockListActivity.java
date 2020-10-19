@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -56,6 +58,14 @@ public class StockListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        return true;
     }
 
     private void initDataset(JSONArray retrieveStockDataInJSON) {
