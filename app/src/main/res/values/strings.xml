@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Stocks</string>
-    <string name="element_text">Element</string>
+    <string name="element_symbol">Symbol</string>
+    <string name="element_company_name">Company Name</string>
+    <string name="element_latest_price">Latest Price</string>
+    <string name="element_change_percent">Change Percent</string>
 </resources>

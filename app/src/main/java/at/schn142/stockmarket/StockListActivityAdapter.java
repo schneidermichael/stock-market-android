@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.graphics.Color.rgb;
+
 public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActivityAdapter.MyViewHolder> {
     public static final String TAG = "MyAdapter";
 
@@ -25,7 +27,10 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView cardView;
-        public TextView textCardView;
+        public TextView textCardViewSymbol;
+        public TextView textCardViewCompanyName;
+        public TextView textCardViewLatestPrice;
+        public TextView textCardViewChangePercent;
 
         public MyViewHolder(CardView c){
             super(c);
@@ -37,7 +42,10 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
                     v.getContext().startActivity(intent);
                 }
             });
-            textCardView = (TextView) c.findViewById(R.id.cardTextView);
+            textCardViewSymbol = (TextView) c.findViewById(R.id.cardTextViewSymbol);
+            textCardViewCompanyName = (TextView) c.findViewById(R.id.cardTextViewCompanyName);
+            textCardViewLatestPrice = (TextView) c.findViewById(R.id.cardTextViewLatestPrice);
+            textCardViewChangePercent = (TextView) c.findViewById(R.id.cardTextViewChangePercent);
             cardView = (CardView) c.findViewById(R.id.cardView);
         }
 
@@ -67,9 +75,20 @@ public class StockListActivityAdapter extends RecyclerView.Adapter<StockListActi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         JSONObject i = null;
+        String changePercent= "";
+
         try {
-             i = jsonArray.getJSONObject(position);
-            holder.textCardView.setText(i.getString("companyName"));
+            i = jsonArray.getJSONObject(position);
+            holder.textCardViewSymbol.setText(i.getString("symbol"));
+            holder.textCardViewCompanyName.setText(i.getString("companyName"));
+            holder.textCardViewLatestPrice.setText(i.getString("latestPrice"));
+            changePercent = i.getString("changePercent");
+            if(changePercent.charAt(0)== '-'){
+                holder.textCardViewChangePercent.setBackgroundColor(rgb(243,17,0));
+            }else{
+                holder.textCardViewChangePercent.setBackgroundColor(rgb(76,175,80));
+            }
+            holder.textCardViewChangePercent.setText(i.getString("changePercent"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
