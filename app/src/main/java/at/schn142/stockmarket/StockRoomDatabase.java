@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Stock.class}, version = 1, exportSchema = false)
+@Database(entities = {Stock.class}, version = 2, exportSchema = false)
 public abstract class StockRoomDatabase extends RoomDatabase {
 
     public abstract StockDao stockDao();
@@ -28,6 +28,7 @@ public abstract class StockRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             StockRoomDatabase.class, "stock_database")
                             .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -42,17 +43,22 @@ public abstract class StockRoomDatabase extends RoomDatabase {
 
             // If you want to keep data through app restarts,
             // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                StockDao dao = INSTANCE.stockDao();
-                dao.deleteAll();
-
-                Stock stock = new Stock("AAPL");
-                dao.insert(stock);
-                stock = new Stock("BA");
-                dao.insert(stock);
-            });
+//            databaseWriteExecutor.execute(() -> {
+//                // Populate the database in the background.
+//                // If you want to start with more words, just add them.
+//                StockDao dao = INSTANCE.stockDao();
+//                dao.deleteAll();
+//
+//                Stock stock = new Stock("AAPL","Apple","122.12","0.01383");
+//                dao.insert(stock);
+//                stock = new Stock("BA","The Boeing Company","100.2","-0.13456");
+//                dao.insert(stock);
+//                stock = new Stock("BE","Berkshire Hathaway Inc.","89.5","20.1344");
+//                dao.insert(stock);
+//                stock = new Stock("NI","NIKE, Inc.","20.0","5.9421");
+//                dao.insert(stock);
+//
+//            });
         }
     };
 }

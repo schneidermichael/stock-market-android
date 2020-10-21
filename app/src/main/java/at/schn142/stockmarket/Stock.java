@@ -13,11 +13,35 @@ public class Stock {
     @ColumnInfo(name = "symbol")
     private String symbol;
 
-    public Stock(String symbol){
-        this.symbol = symbol;
-    }
+    @ColumnInfo(name = "companyName")
+    private String companyName;
 
+    @ColumnInfo(name = "latestPrice")
+    private String latestPrice;
+
+    @ColumnInfo(name = "changePercent")
+    private String changePercent;
+
+    public Stock(String symbol, String companyName, String latestPrice, String changePercent) {
+        this.symbol = symbol;
+        this.companyName = companyName;
+        this.latestPrice = latestPrice;
+        this.changePercent = changePercent;
+    }
     public String getSymbol(){
         return this.symbol;
     }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getLatestPrice() {
+        return latestPrice;
+    }
+
+    public String getChangePercent() {
+        return changePercent;
+    }
+
 }

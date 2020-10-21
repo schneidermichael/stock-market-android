@@ -1,6 +1,7 @@
 package at.schn142.stockmarket;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -19,7 +20,7 @@ public interface StockDao {
     @Query("DELETE FROM stock_table")
     void deleteAll();
 
-    @Query("SELECT * from stock_table ORDER BY symbol ASC")
-    LiveData<List<Stock>> getAlphabetizedStocks();
+ //   @Query("SELECT * from stock_table ORDER BY symbol ASC")
+ //   LiveData<List<Stock>> getAlphabetizedStocks();
 
 }

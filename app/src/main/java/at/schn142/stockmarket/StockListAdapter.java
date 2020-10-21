@@ -77,8 +77,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        if (mStockCards != null) {
-            StockCard current = mStockCards.get(position);
+        if (mStocks != null) {
+            Stock current = mStocks.get(position);
             Log.i(TAG,current.getSymbol());
             holder.textCardViewSymbol.setText(current.getSymbol());
             holder.textCardViewCompanyName.setText(current.getCompanyName());
@@ -97,10 +97,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         }
     }
 
-    private List<StockCard> mStockCards;
-
-    void  setStockCard(List<StockCard> stockCard){
-        mStockCards = stockCard;
+    void  setStockCard(List<Stock> stockCard){
+        mStocks = stockCard;
         notifyDataSetChanged();
     }
 
@@ -116,8 +114,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount(){
-        if (mStockCards != null)
-            return mStockCards.size();
+        if (mStocks != null)
+            return mStocks.size();
         else return 0;
     }
 
