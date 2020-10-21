@@ -9,6 +9,7 @@ The following guides illustrate how to use some features concretely:
 * [Add the app bar](https://developer.android.com/training/appbar)
 * [Search Overview](https://developer.android.com/guide/topics/search)
 * [Android Room with a View - Java](https://codelabs.developers.google.com/codelabs/android-room-with-a-view)
+* [How to fetch data from an api using ViewModel and LiveData in Java](https://www.avinsharma.com/fetch-data-api-viewmodel-livedata-java)
 
 ### API
 

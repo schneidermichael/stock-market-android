@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.schn142.stockmarket">
 
-
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
@@ -15,11 +14,20 @@
     <!---  android:theme="@style/Theme.StockMarket" -->
 
         <activity android:name=".StockListActivity">
+
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".StockListDetailActivity">
 

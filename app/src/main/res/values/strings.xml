@@ -5,4 +5,5 @@
     <string name="element_latest_price">Latest Price</string>
     <string name="element_change_percent">Change Percent</string>
     <string name="search_title">Search Title</string>
+    <string name="search_hint">Search</string>
 </resources>

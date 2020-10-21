@@ -1,11 +1,14 @@
 package at.schn142.stockmarket;
 
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
 
+@Dao
 public interface StockDao {
 
     // allowing the insert of the same word multiple times by passing a
@@ -17,5 +20,6 @@ public interface StockDao {
     void deleteAll();
 
     @Query("SELECT * from stock_table ORDER BY symbol ASC")
-    List<Stock> getAlphabetizedStocks();
+    LiveData<List<Stock>> getAlphabetizedStocks();
+
 }
