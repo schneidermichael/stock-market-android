@@ -1,6 +1,7 @@
 package at.schn142.stockmarket;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,13 @@ import java.util.Scanner;
 
 class StockRepository {
 
- //   private StockDao mStockDao;
+    public static final String TAG = "StockRepository";
+
+    //   private StockDao mStockDao;
     private MutableLiveData<List<Stock>> mAllStocks = new MutableLiveData<>();;
 
     private Thread mThread;
+
 
 //    StockRepository(Application application) {
 //        StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
@@ -42,30 +47,47 @@ class StockRepository {
 //        });
 //    }
 
-    public void searchIexCloud(URL url) {
+    public void searchIexCloud(String searchQuery) {
         Runnable fetchJsonRunnable = new Runnable() {
             @Override
             public void run() {
                 try{
+
+                    URL symbolUrl = new URL("https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
                     List<Stock> postList = new ArrayList<>();
                     String response = "";
                     try {
-                        response = getResponseFromHttpUrl(url);
+                        response = getResponseFromHttpUrl(symbolUrl);
                     }catch (FileNotFoundException i){
-                        postList.add(new Stock("NOT FOUND","","","0.0"));
-                        mAllStocks.postValue(postList);
-                        return;
+                        i.getCause();
                     }
 
-                        JSONObject json = new JSONObject(response);
+                    JSONArray jsonStocks = new JSONArray(response);
+                    JSONObject o = new JSONObject();
+                    for(int i = 0; i < jsonStocks.length(); i++)
+                    {
+                        o = (JSONObject) jsonStocks.get(i);
+                        if(o.getString("symbol").contains(searchQuery)){
+                            URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/"+o.getString("symbol")+"/quote?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
 
-                        Stock stock = new Stock(json.getString("symbol"),
-                                json.getString("companyName"),
-                                json.getString("latestPrice"),
-                                json.getString("changePercent"));
+                            String r = "";
+                            try {
+                                r = getResponseFromHttpUrl(stockUrl);
+                            }catch (FileNotFoundException file){
+                                file.getCause();
+                            }
+                            JSONObject oNew = new JSONObject(r);
 
-                    postList.add(stock);
+                            Stock stock = new Stock(oNew.getString("symbol"),
+                                    oNew.getString("companyName"),
+                                    oNew.getString("latestPrice"),
+                                    oNew.getString("changePercent")
+                            );
 
+                            postList.add(stock);
+                        }
+                    }
+                    Log.i(TAG, String.valueOf(postList.size()));
                     mAllStocks.postValue(postList);
 
                 }catch (IOException | JSONException e){

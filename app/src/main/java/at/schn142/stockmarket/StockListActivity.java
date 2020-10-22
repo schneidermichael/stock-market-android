@@ -62,8 +62,8 @@ public class StockListActivity extends AppCompatActivity {
         if(searchQuery.equals("")){
             Toast.makeText(context, "Please enter a search term.", Toast.LENGTH_SHORT).show();
         }else{
-            URL url = Utility.buildUrl(searchQuery);
-            mStockViewModel.searchIexCloud(url);
+          //  URL url = Utility.buildUrl();
+            mStockViewModel.searchIexCloud(searchQuery);
         }
     }
 

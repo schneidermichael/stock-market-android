@@ -43,8 +43,8 @@ public class StockViewModel extends AndroidViewModel {
  //       mRepository.insert(stock);
  //   }
 
-    public void searchIexCloud(URL url) {
-        mRepository.searchIexCloud(url);
+    public void searchIexCloud(String searchQuery) {
+        mRepository.searchIexCloud(searchQuery);
     }
 
 }

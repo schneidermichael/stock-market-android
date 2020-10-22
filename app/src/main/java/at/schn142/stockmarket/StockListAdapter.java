@@ -23,7 +23,7 @@ import static android.graphics.Color.rgb;
 public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
 
     public static final String TAG = "StockListAdapter";
-    private static DecimalFormat formatFLoat = new DecimalFormat("0.000");
+    private static DecimalFormat myFormatter = new DecimalFormat("0.000");
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -79,11 +79,18 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
 
         if (mStocks != null) {
             Stock current = mStocks.get(position);
-            Log.i(TAG,current.getSymbol());
+
             holder.textCardViewSymbol.setText(current.getSymbol());
             holder.textCardViewCompanyName.setText(current.getCompanyName());
             holder.textCardViewLatestPrice.setText(current.getLatestPrice());
-            String changePercent = String.valueOf(formatFLoat.format(Float.parseFloat(current.getChangePercent())));
+
+            String changePercent = "0.00";
+            try {
+                changePercent = String.valueOf(myFormatter.format(Double.parseDouble(current.getChangePercent())));
+            }catch (NumberFormatException n){
+                n.printStackTrace();
+            }
+
             if(current.getChangePercent().charAt(0)== '-'){
                 holder.textCardViewChangePercent.setBackgroundColor(rgb(243,17,0));
                 holder.textCardViewChangePercent.setText(changePercent);
