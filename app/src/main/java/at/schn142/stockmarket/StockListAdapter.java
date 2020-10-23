@@ -20,7 +20,7 @@ import java.util.List;
 
 import static android.graphics.Color.rgb;
 
-public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
+public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.StockListHolder> {
 
     public static final String TAG = "StockListAdapter";
     private static DecimalFormat myFormatter = new DecimalFormat("0.000");
@@ -28,7 +28,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class StockViewHolder extends RecyclerView.ViewHolder {
+    public static class StockListHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView cardView;
         public TextView textCardViewSymbol;
@@ -36,7 +36,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         public TextView textCardViewLatestPrice;
         public TextView textCardViewChangePercent;
 
-        public StockViewHolder(View itemView){
+        public StockListHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -46,7 +46,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
                     v.getContext().startActivity(intent);
                 }
             });
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
+            cardView = (CardView) itemView.findViewById(R.id.searchCardView);
             textCardViewSymbol = (TextView) itemView.findViewById(R.id.cardTextViewSymbol);
             textCardViewCompanyName = (TextView) itemView.findViewById(R.id.cardTextViewCompanyName);
             textCardViewLatestPrice = (TextView) itemView.findViewById(R.id.cardTextViewLatestPrice);
@@ -64,16 +64,16 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockListAdapter.StockViewHolder onCreateViewHolder(ViewGroup parent,
+    public StockListAdapter.StockListHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
         // create a new view
         View itemView = mInflater.inflate(R.layout.list_card_view, parent, false);
-        return new StockViewHolder(itemView);
+        return new StockListHolder(itemView);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(StockViewHolder holder, int position) {
+    public void onBindViewHolder(StockListHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 

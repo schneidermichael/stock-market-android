@@ -1,30 +1,31 @@
 package at.schn142.stockmarket;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.widget.SearchView;
+
+import android.view.View;
 import android.widget.Toast;
 
-import java.net.URL;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 public class StockListActivity extends AppCompatActivity {
 
     public static final String TAG = "StockListActivity";
 
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
     private StockViewModel mStockViewModel;
-    private List<Stock> mStock;
-    private RecyclerView recyclerView;
+    private RecyclerView stockRecyclerView;
     private StockListAdapter mAdapter;
+    private StockSearchAdapter searchAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -32,64 +33,45 @@ public class StockListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        stockRecyclerView = (RecyclerView) findViewById(R.id.stock_recycler_view);
         mAdapter = new StockListAdapter(this);
 
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
+        stockRecyclerView.setLayoutManager(layoutManager);
+        stockRecyclerView.setAdapter(mAdapter);
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
-        mStockViewModel.getAllStock().observe(this, new Observer<List<Stock>>() {
+        mStockViewModel.getAllStocks().observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
-                mStock = stocks;
                 mAdapter.setStocks(stocks);
             }
         });
 
-    }
-
-    private void searchIexCloud(String searchQuery){
-
-        Context context = StockListActivity.this;
-
-        if(searchQuery.equals("")){
-            Toast.makeText(context, "Please enter a search term.", Toast.LENGTH_SHORT).show();
-        }else{
-          //  URL url = Utility.buildUrl();
-            mStockViewModel.searchIexCloud(searchQuery);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setQueryHint("Type a stocks symbol");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                searchIexCloud(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public void onClick(View view) {
+                Intent intent = new Intent(StockListActivity.this, StockSearchActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
-
-        return true;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Toast.makeText(StockListActivity.this,
+                    getString(R.string.add_stock_preamble) + " " +data.getStringExtra(StockSearchActivity.EXTRA_REPLY), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

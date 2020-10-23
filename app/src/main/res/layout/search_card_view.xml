@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <!-- A CardView that contains a TextView -->
+<!-- A CardView that contains a TextView -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +11,7 @@
     card_view:cardElevation="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/listLinearLayout"
+        android:id="@+id/searchLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

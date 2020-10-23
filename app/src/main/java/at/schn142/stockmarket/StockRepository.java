@@ -25,27 +25,34 @@ class StockRepository {
 
     public static final String TAG = "StockRepository";
 
-    //   private StockDao mStockDao;
-    private MutableLiveData<List<Stock>> mAllStocks = new MutableLiveData<>();;
+    private StockDao mStockDao;
+
+    private MutableLiveData<List<Stock>> mSearchStocks;
+
+    private LiveData<List<Stock>> mAllStocks;
 
     private Thread mThread;
 
+    StockRepository(Application application) {
+        StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
+        mStockDao = db.stockDao();
+        mAllStocks = mStockDao.getAlphabetizedStocks();
+        mSearchStocks = new MutableLiveData<>();
+    }
 
-//    StockRepository(Application application) {
-//        StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
-//        mStockDao = db.stockDao();
-//      //  mAllStocks = mStockDao.getAlphabetizedStocks();
-//    }
+    MutableLiveData<List<Stock>> getSearchStocks() {
+        return mSearchStocks;
+    }
 
-    MutableLiveData<List<Stock>> getAllStocks() {
+    LiveData<List<Stock>> getAllStocks() {
         return mAllStocks;
     }
 
-//    void insert(Stock stock) {
-//        StockRoomDatabase.databaseWriteExecutor.execute(() -> {
-//            mStockDao.insert(stock);
-//        });
-//    }
+    void insert(Stock stock) {
+        StockRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mStockDao.insert(stock);
+        });
+    }
 
     public void searchIexCloud(String searchQuery) {
         Runnable fetchJsonRunnable = new Runnable() {
@@ -88,7 +95,7 @@ class StockRepository {
                         }
                     }
                     Log.i(TAG, String.valueOf(postList.size()));
-                    mAllStocks.postValue(postList);
+                    mSearchStocks.postValue(postList);
 
                 }catch (IOException | JSONException e){
                     e.printStackTrace();

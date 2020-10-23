@@ -20,7 +20,7 @@ public interface StockDao {
     @Query("DELETE FROM stock_table")
     void deleteAll();
 
- //   @Query("SELECT * from stock_table ORDER BY symbol ASC")
- //   LiveData<List<Stock>> getAlphabetizedStocks();
+    @Query("SELECT * from stock_table ORDER BY symbol ASC")
+    LiveData<List<Stock>> getAlphabetizedStocks();
 
 }

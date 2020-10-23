@@ -6,4 +6,7 @@
     <string name="element_change_percent">Change Percent</string>
     <string name="search_title">Search Title</string>
     <string name="search_hint">Search</string>
+    <string name="add_stock">Add Stock</string>
+    <string name="empty_not_saved">Empty Stock</string>
+    <string name="add_stock_preamble">Add Stock</string>
 </resources>
