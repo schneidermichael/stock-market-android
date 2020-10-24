@@ -24,7 +24,6 @@ public class StockSearchActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
     private StockViewModel mStockViewModel;
-    private List<Stock> mStock;
     private RecyclerView recyclerView;
     private StockSearchAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -34,7 +33,7 @@ public class StockSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(myToolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
@@ -51,7 +50,6 @@ public class StockSearchActivity extends AppCompatActivity {
         mStockViewModel.getSearchStock().observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
-                mStock = stocks;
                 mAdapter.setStocks(stocks);
             }
         });

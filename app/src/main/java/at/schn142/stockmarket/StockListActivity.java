@@ -1,6 +1,7 @@
 package at.schn142.stockmarket;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,13 +26,15 @@ public class StockListActivity extends AppCompatActivity {
     private StockViewModel mStockViewModel;
     private RecyclerView stockRecyclerView;
     private StockListAdapter mAdapter;
-    private StockSearchAdapter searchAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
 
         stockRecyclerView = (RecyclerView) findViewById(R.id.stock_recycler_view);
         mAdapter = new StockListAdapter(this);

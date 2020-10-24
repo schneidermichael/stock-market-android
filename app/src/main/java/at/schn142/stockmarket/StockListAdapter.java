@@ -104,11 +104,6 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         }
     }
 
-    void  setStockCard(List<Stock> stockCard){
-        mStocks = stockCard;
-        notifyDataSetChanged();
-    }
-
     void setStocks(List<Stock> stocks) {
         mStocks = stocks;
         notifyDataSetChanged();
