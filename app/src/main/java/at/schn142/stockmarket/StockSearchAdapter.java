@@ -112,6 +112,8 @@ public static class StockSearchHolder extends RecyclerView.ViewHolder implements
                 holder.textCardViewChangePercent.setBackgroundColor(rgb(76,175,80));
                 holder.textCardViewChangePercent.setText("+"+changePercent);
             }
+
+
         } else {
             // Covers the case of data not being ready yet.
             holder.textCardViewSymbol.setText("No Word");

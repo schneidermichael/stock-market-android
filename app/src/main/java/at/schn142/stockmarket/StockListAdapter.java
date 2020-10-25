@@ -109,7 +109,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         notifyDataSetChanged();
     }
 
-    public Stock getWordAtPosition (int position) {
+    public Stock getStockAtPosition (int position) {
         return mStocks.get(position);
     }
 

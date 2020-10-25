@@ -1,6 +1,7 @@
 package at.schn142.stockmarket;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -52,6 +53,42 @@ class StockRepository {
         StockRoomDatabase.databaseWriteExecutor.execute(() -> {
             mStockDao.insert(stock);
         });
+    }
+
+    public void deleteAll()  {
+        new deleteAllStocksAsyncTask(mStockDao).execute();
+    }
+
+    public void deleteStock(Stock stock)  {
+        new deleteStockAsyncTask(mStockDao).execute(stock);
+    }
+
+    private static class deleteAllStocksAsyncTask extends AsyncTask<Void, Void, Void> {
+        private StockDao mAsyncTaskDao;
+
+        deleteAllStocksAsyncTask(StockDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class deleteStockAsyncTask extends AsyncTask<Stock, Void, Void> {
+        private StockDao mAsyncTaskDao;
+
+        deleteStockAsyncTask(StockDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Stock... params) {
+            mAsyncTaskDao.deleteStock(params[0]);
+            return null;
+        }
     }
 
     public void searchIexCloud(String searchQuery) {

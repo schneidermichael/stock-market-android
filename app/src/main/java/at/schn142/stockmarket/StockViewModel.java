@@ -48,6 +48,10 @@ public class StockViewModel extends AndroidViewModel {
         mRepository.insert(stock);
     }
 
+    public void deleteStock(Stock stock) {mRepository.deleteStock(stock);}
+
+    public void deleteAll() {mRepository.deleteAll();}
+
     public void searchIexCloud(String searchQuery) {
         mRepository.searchIexCloud(searchQuery);
     }

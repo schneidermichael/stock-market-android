@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,6 +66,34 @@ public class StockListActivity extends AppCompatActivity {
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
+
+        // Add the functionality to swipe items in the
+// recycler view to delete that item
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Stock stock = mAdapter.getStockAtPosition(position);
+                        Toast.makeText(StockListActivity.this, "Deleting " +
+                                stock.getCompanyName(), Toast.LENGTH_LONG).show();
+
+
+                        mStockViewModel.deleteStock(stock);
+                    }
+                });
+
+        helper.attachToRecyclerView(stockRecyclerView);
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,6 +108,31 @@ public class StockListActivity extends AppCompatActivity {
                     R.string.empty_not_saved,
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.clear_stocks) {
+            // Add a toast just for confirmation
+            Toast.makeText(this, "Clearing the data...",
+                    Toast.LENGTH_SHORT).show();
+
+            // Delete the existing data
+            mStockViewModel.deleteAll();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return true;
     }
 
 }

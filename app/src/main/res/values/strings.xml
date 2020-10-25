@@ -9,4 +9,5 @@
     <string name="add_stock">Add Stock</string>
     <string name="empty_not_saved">Empty Stock</string>
     <string name="add_stock_preamble">Add Stock</string>
+    <string name="clear_all_stocks">Clear All Stocks</string>
 </resources>
