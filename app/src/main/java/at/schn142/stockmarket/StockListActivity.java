@@ -8,14 +8,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -67,8 +69,7 @@ public class StockListActivity extends AppCompatActivity {
             }
         });
 
-        // Add the functionality to swipe items in the
-// recycler view to delete that item
+
         ItemTouchHelper helper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -94,6 +95,7 @@ public class StockListActivity extends AppCompatActivity {
 
         helper.attachToRecyclerView(stockRecyclerView);
 
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -114,13 +116,18 @@ public class StockListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.clear_stocks) {
+        if (id == R.id.action_clear_stocks) {
             // Add a toast just for confirmation
             Toast.makeText(this, "Clearing the data...",
                     Toast.LENGTH_SHORT).show();
 
             // Delete the existing data
             mStockViewModel.deleteAll();
+            return true;
+
+        }else if(id == R.id.action_settings){
+            Intent intent = new Intent(StockListActivity.this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -134,5 +141,6 @@ public class StockListActivity extends AppCompatActivity {
 
         return true;
     }
+
 
 }
