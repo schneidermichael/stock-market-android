@@ -38,13 +38,13 @@ public class StockViewModel extends AndroidViewModel {
         mSearchStocks = mRepository.getSearchStocks();
     }
 
-    LiveData<List<Stock>> getSearchStock() {
+    public LiveData<List<Stock>> getSearchStock() {
         return mSearchStocks;
     }
 
-    LiveData<List<Stock>> getAllStocks() { return mAllStocks;}
+    public LiveData<List<Stock>> getAllStocks() { return mAllStocks;}
 
-    void insert(Stock stock) {
+    public void insert(Stock stock) {
         mRepository.insert(stock);
     }
 

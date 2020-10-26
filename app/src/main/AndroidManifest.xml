@@ -3,6 +3,8 @@
     package="at.schn142.stockmarket">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -13,7 +15,7 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
         <activity
-            android:name=".StockListActivity"
+            android:name=".activity.StockListActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action
@@ -24,12 +26,12 @@
         </activity>
 
         <activity
-            android:name=".StockListDetailActivity">
+            android:name=".activity.StockListDetailActivity">
         </activity>
 
         <activity
-            android:name=".StockSearchActivity"
-            android:parentActivityName=".StockListActivity">
+            android:name=".activity.StockSearchActivity"
+            android:parentActivityName=".activity.StockListActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"
@@ -40,21 +42,23 @@
         </activity>
 
         <activity
-            android:name=".MapActivity"
+            android:name=".activity.MapActivity"
             android:label="@string/title_activity_map">
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".StockListActivity">
+            android:parentActivityName=".activity.StockListActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StockListActivity"/>
+                android:value=".activity.StockListActivity"/>
         </activity>
 
 
+        <meta-data android:name="com.here.sdk.access_key_id" android:value="RqDjHxb81D-uj_RmnG2nyA" />
+        <meta-data android:name="com.here.sdk.access_key_secret" android:value="bygi-z3dInULebVhhF6dvTJKXjepWuB6AkU_5dTdkf6N9pi7_6k98mHDjNKDUCQVD-juBkT_7dgJloiOiOHVfw" />
 
     </application>
 
