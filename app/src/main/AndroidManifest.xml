@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,54 +13,57 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
+        android:theme="@style/Theme.StockMarket">
         <activity
-            android:name=".activity.StockListActivity"
-            android:launchMode="singleTop">
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN" />
-                <category
-                    android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+<!--        <activity-->
+<!--            android:name=".activity.StockListActivity"-->
+<!--            android:launchMode="singleTop">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <activity
-            android:name=".activity.StockListDetailActivity">
-        </activity>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity android:name=".activity.StockListDetailActivity"></activity>-->
+<!--        <activity-->
+<!--            android:name=".activity.StockSearchActivity"-->
+<!--            android:parentActivityName=".activity.StockListActivity">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.searchable"-->
+<!--                android:resource="@xml/searchable"-->
+<!--                android:value=".StockListActivity" />-->
 
-        <activity
-            android:name=".activity.StockSearchActivity"
-            android:parentActivityName=".activity.StockListActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"
-                android:value=".StockListActivity"/>
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEARCH" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".activity.MapActivity"-->
+<!--            android:label="@string/title_activity_map"></activity>-->
+<!--        <activity-->
+<!--            android:name=".activity.SettingsActivity"-->
+<!--            android:label="@string/action_settings"-->
+<!--            android:parentActivityName=".activity.StockListActivity">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".activity.StockListActivity" />-->
+<!--        </activity>-->
 
-        <activity
-            android:name=".activity.MapActivity"
-            android:label="@string/title_activity_map">
-        </activity>
-
-        <activity
-            android:name=".activity.SettingsActivity"
-            android:label="@string/action_settings"
-            android:parentActivityName=".activity.StockListActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.StockListActivity"/>
-        </activity>
-
-
-        <meta-data android:name="com.here.sdk.access_key_id" android:value="RqDjHxb81D-uj_RmnG2nyA" />
-        <meta-data android:name="com.here.sdk.access_key_secret" android:value="bygi-z3dInULebVhhF6dvTJKXjepWuB6AkU_5dTdkf6N9pi7_6k98mHDjNKDUCQVD-juBkT_7dgJloiOiOHVfw" />
-
+        <meta-data
+            android:name="com.here.sdk.access_key_id"
+            android:value="RqDjHxb81D-uj_RmnG2nyA" />
+        <meta-data
+            android:name="com.here.sdk.access_key_secret"
+            android:value="bygi-z3dInULebVhhF6dvTJKXjepWuB6AkU_5dTdkf6N9pi7_6k98mHDjNKDUCQVD-juBkT_7dgJloiOiOHVfw" />
     </application>
 
 </manifest>
