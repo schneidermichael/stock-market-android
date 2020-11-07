@@ -1,4 +1,4 @@
-package at.schn142.stockmarket;
+package at.schn142.stockmarket.model;
 
 public class StockExchange {
 

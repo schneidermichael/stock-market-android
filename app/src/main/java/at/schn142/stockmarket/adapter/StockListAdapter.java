@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.Stock;
-import at.schn142.stockmarket.activity.StockListDetailActivity;
+import at.schn142.stockmarket.model.Stock;
+import at.schn142.stockmarket.activity.StockActivity;
 
 import static android.graphics.Color.rgb;
 
@@ -45,7 +45,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                    Intent intent = new Intent (v.getContext(), StockListDetailActivity.class);
+                    Intent intent = new Intent (v.getContext(), StockActivity.class);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -68,7 +68,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
     public StockListAdapter.StockListHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
         // create a new view
-        View itemView = mInflater.inflate(R.layout.list_card_view, parent, false);
+        View itemView = mInflater.inflate(R.layout.home_card_view, parent, false);
         return new StockListHolder(itemView);
     }
 

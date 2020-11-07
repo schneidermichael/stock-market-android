@@ -8,6 +8,11 @@
             app:title="@string/signature_title"
             app:useSimpleSummaryProvider="true" />
 
+        <CheckBoxPreference
+            app:key="checkbox_preference"
+            app:title="@string/title_checkbox_preference"
+            app:defaultValue='false'/>
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/sync_header">

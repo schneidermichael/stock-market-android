@@ -10,7 +10,6 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.Stock;
+import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.StockViewModel;
 import at.schn142.stockmarket.adapter.StockSearchAdapter;
 
-public class StockSearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "StockSearchActivity";
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
@@ -36,10 +35,8 @@ public class StockSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_main);
+        setContentView(R.layout.activity_search);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.search_toolbar);
-        setSupportActionBar(myToolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
 
@@ -79,7 +76,7 @@ public class StockSearchActivity extends AppCompatActivity {
 
     private void searchIexCloud(String searchQuery){
 
-        Context context = StockSearchActivity.this;
+        Context context = SearchActivity.this;
 
         if(searchQuery.equals("")){
             Toast.makeText(context, "Please enter a search term.", Toast.LENGTH_SHORT).show();
@@ -91,7 +88,7 @@ public class StockSearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Type a stocks symbol");

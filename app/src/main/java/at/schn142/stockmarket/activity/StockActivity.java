@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import at.schn142.stockmarket.R;
 
-public class StockListDetailActivity extends AppCompatActivity {
+public class StockActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_card_view);
+        setContentView(R.layout.activity_stock);
 
     }
 

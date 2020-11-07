@@ -1,4 +1,4 @@
-package at.schn142.stockmarket;
+package at.schn142.stockmarket.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

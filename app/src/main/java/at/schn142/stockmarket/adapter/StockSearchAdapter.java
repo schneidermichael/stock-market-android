@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.Stock;
+import at.schn142.stockmarket.model.Stock;
 
 import static android.graphics.Color.rgb;
 
@@ -70,7 +70,7 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
     public StockSearchAdapter.StockSearchHolder onCreateViewHolder(ViewGroup parent,
                                                                    int viewType) {
         // create a new view
-        View itemView = mInflater.inflate(R.layout.list_card_view, parent, false);
+        View itemView = mInflater.inflate(R.layout.home_card_view, parent, false);
         return new StockSearchAdapter.StockSearchHolder(itemView);
     }
 

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import at.schn142.stockmarket.model.Stock;
+
 class StockRepository {
 
     public static final String TAG = "StockRepository";

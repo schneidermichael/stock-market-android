@@ -11,6 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import at.schn142.stockmarket.model.Stock;
+
 @Database(entities = {Stock.class}, version = 2, exportSchema = false)
 public abstract class StockRoomDatabase extends RoomDatabase {
 
