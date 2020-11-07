@@ -63,6 +63,7 @@ class StockRepository {
         new deleteStockAsyncTask(mStockDao).execute(stock);
     }
 
+    //TODO replace with thread
     private static class deleteAllStocksAsyncTask extends AsyncTask<Void, Void, Void> {
         private StockDao mAsyncTaskDao;
 
@@ -77,6 +78,7 @@ class StockRepository {
         }
     }
 
+    //TODO replace with thread
     private static class deleteStockAsyncTask extends AsyncTask<Stock, Void, Void> {
         private StockDao mAsyncTaskDao;
 
