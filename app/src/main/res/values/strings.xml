@@ -12,21 +12,17 @@
     <string name="clear_all_stocks">Clear All Stocks</string>
     <string name="action_stock">Stock</string>
     <string name="action_map">Map</string>
-    <string name="title_activity_map">MapActivity</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-
     <string name="title_activity_main">MainActivity</string>
+
+
+    <!-- Settings -->
+    <string name="switch_asc">Sortierung ASC</string>
+    <string name="switch_asc_value">switch_preference</string>
+
+    <!-- Fragments -->
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_settings">Settings</string>
-    <string name="title_checkbox_preference">Update Stocks every 5 s</string>
+
+
 </resources>

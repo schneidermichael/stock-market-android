@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,6 +50,7 @@ class StockRepository {
     LiveData<List<Stock>> getAllStocks() {
         return mAllStocks;
     }
+
 
     void insert(Stock stock) {
         StockRoomDatabase.databaseWriteExecutor.execute(() -> {

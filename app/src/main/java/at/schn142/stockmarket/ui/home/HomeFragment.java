@@ -1,6 +1,7 @@
 package at.schn142.stockmarket.ui.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.ListPreference;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +27,12 @@ import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.StockViewModel;
 import at.schn142.stockmarket.activity.SearchActivity;
 import at.schn142.stockmarket.adapter.StockListAdapter;
+import at.schn142.stockmarket.ui.settings.SettingsFragment;
 
 public class HomeFragment extends Fragment {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-    private HomeViewModel homeViewModel;
 
     private StockViewModel mStockViewModel;
     private RecyclerView stockRecyclerView;
@@ -38,18 +41,14 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        Boolean switchPref = sharedPref.getBoolean("switch_preference",false);
+        
         stockRecyclerView = root.findViewById(R.id.stock_recycler_view);
         mAdapter = new StockListAdapter(root.getContext());
 
@@ -60,10 +59,15 @@ public class HomeFragment extends Fragment {
         // Get a new or existing ViewModel from the ViewModelProvider.
         mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
+
         mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
-                mAdapter.setStocks(stocks);
+
+                if (switchPref){
+                    mAdapter.sortStocksAsc(stocks);
+                }else
+                    mAdapter.sortStocksDesc(stocks);
             }
         });
 

@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "stock_table")
-public class Stock {
+public class Stock implements Comparable<Stock>{
 
     @PrimaryKey
     @NonNull
@@ -44,4 +44,8 @@ public class Stock {
         return changePercent;
     }
 
+    @Override
+    public int compareTo(Stock stock) {
+        return this.symbol.compareTo(stock.symbol);
+    }
 }

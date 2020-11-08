@@ -11,6 +11,7 @@ The following guides illustrate how to use some features concretely:
 * [Android Room with a View - Java](https://codelabs.developers.google.com/codelabs/android-room-with-a-view)
 * [How to fetch data from an api using ViewModel and LiveData in Java](https://www.avinsharma.com/fetch-data-api-viewmodel-livedata-java)
 * [Settings with PreferenceFragment](https://guides.codepath.com/android/settings-with-preferencefragment)
+* [ViewModels and LiveData: Patterns + AntiPatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
 
 ### API
 

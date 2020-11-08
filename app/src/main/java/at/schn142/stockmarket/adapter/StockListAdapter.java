@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
@@ -105,7 +106,13 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
         }
     }
 
-    public void setStocks(List<Stock> stocks) {
+    public void sortStocksAsc(List<Stock> stocks) {
+        mStocks = stocks;
+        notifyDataSetChanged();
+    }
+
+    public void sortStocksDesc(List<Stock> stocks){
+        Collections.sort(stocks,Collections.reverseOrder());
         mStocks = stocks;
         notifyDataSetChanged();
     }
