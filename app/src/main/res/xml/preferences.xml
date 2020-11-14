@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="feedback"
-        app:title="@string/preference_delete_all"/>
+        app:key="deleteAllStocks"
+        app:title="@string/preference_delete_all"
+        app:summary="Delete all Stocks in the database"/>
 
     <ListPreference
         android:defaultValue="asc"

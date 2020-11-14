@@ -70,12 +70,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(root.getContext(), SearchActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                //Ansonsten ist der Return Code falsch -> Fragment
+                getActivity().startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 

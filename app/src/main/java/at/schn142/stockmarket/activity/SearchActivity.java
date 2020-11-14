@@ -3,6 +3,7 @@ package at.schn142.stockmarket.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import at.schn142.stockmarket.adapter.StockSearchAdapter;
 public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "StockSearchActivity";
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
     private StockViewModel mStockViewModel;
     private RecyclerView recyclerView;
@@ -60,6 +61,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Stock stock = mAdapter.getStockAtPosition(position);
+                Log.d(TAG,stock.getCompanyName());
                 Intent replyIntent = new Intent();
                 if (stock.getCompanyName().isEmpty()) {
                     setResult(RESULT_CANCELED, replyIntent);

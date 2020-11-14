@@ -26,6 +26,9 @@
     <string name="title_map">Map</string>
     <string name="title_settings">Settings</string>
 
-
+    <!-- SettingsFragment -->
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
 
 </resources>
