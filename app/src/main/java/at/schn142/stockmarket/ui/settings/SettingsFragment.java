@@ -12,8 +12,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         // Indicate here the XML resource you created above that holds the preferences
         setPreferencesFromResource(R.xml.preferences, rootKey);
-
-
     }
 
 }

@@ -2,9 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/switch_asc_value"
-        android:title="@string/switch_asc" />
+    <Preference
+        app:key="feedback"
+        app:title="@string/preference_delete_all"/>
+
+    <ListPreference
+        android:defaultValue="asc"
+        android:entries="@array/pref_sort_titles"
+        android:entryValues="@array/pref_sort_values"
+        android:key="pref_sort"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_sort"
+        android:summary="%s"/>
 
 </PreferenceScreen>

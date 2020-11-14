@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        Boolean switchPref = sharedPref.getBoolean("switch_preference",false);
+        String switchPref = sharedPref.getString("pref_sort","asc");
         
         stockRecyclerView = root.findViewById(R.id.stock_recycler_view);
         mAdapter = new StockListAdapter(root.getContext());
@@ -59,12 +59,11 @@ public class HomeFragment extends Fragment {
         // Get a new or existing ViewModel from the ViewModelProvider.
         mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
-
         mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
 
-                if (switchPref){
+                if (switchPref.equals("asc")){
                     mAdapter.sortStocksAsc(stocks);
                 }else
                     mAdapter.sortStocksDesc(stocks);

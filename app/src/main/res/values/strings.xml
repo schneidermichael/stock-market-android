@@ -16,13 +16,16 @@
 
 
     <!-- Settings -->
-    <string name="switch_asc">Sortierung ASC</string>
-    <string name="switch_asc_value">switch_preference</string>
+
+    <string name="preference_delete_all">Delete All Stocks</string>
+    <string name="pref_sort">Sortierung</string>
+
 
     <!-- Fragments -->
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_settings">Settings</string>
+
 
 
 </resources>
