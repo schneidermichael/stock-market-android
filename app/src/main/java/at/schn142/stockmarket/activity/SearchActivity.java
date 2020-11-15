@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,44 +24,50 @@ import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.StockViewModel;
 import at.schn142.stockmarket.adapter.StockSearchAdapter;
 
+import static android.widget.LinearLayout.VERTICAL;
+
 public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "StockSearchActivity";
     public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
     private StockViewModel mStockViewModel;
-    private RecyclerView recyclerView;
-    private StockSearchAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView searchRecyclerView;
+    private DividerItemDecoration searchItemDecor;
+    private StockSearchAdapter searchAdapter;
+    private RecyclerView.LayoutManager searchlayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        searchRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
+        searchlayoutManager = new LinearLayoutManager(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
+        searchAdapter = new StockSearchAdapter(this);
 
-        mAdapter = new StockSearchAdapter(this);
+        searchRecyclerView.setLayoutManager(searchlayoutManager);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
+        searchItemDecor = new DividerItemDecoration(this, VERTICAL);
+        searchRecyclerView.addItemDecoration(searchItemDecor);
 
-        // Get a new or existing ViewModel from the ViewModelProvider.
+        searchRecyclerView.setAdapter(searchAdapter);
+
         mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
         mStockViewModel.getSearchStock().observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
-                mAdapter.setStocks(stocks);
+
+                searchAdapter.setStocks(stocks);
             }
         });
 
-        mAdapter.setOnItemClickListener(new StockSearchAdapter.ClickListener() {
+        searchAdapter.setOnItemClickListener(new StockSearchAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Stock stock = mAdapter.getStockAtPosition(position);
+                Stock stock = searchAdapter.getStockAtPosition(position);
                 Log.d(TAG,stock.getCompanyName());
                 Intent replyIntent = new Intent();
                 if (stock.getCompanyName().isEmpty()) {

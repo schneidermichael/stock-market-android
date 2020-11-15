@@ -16,6 +16,11 @@ The following guides illustrate how to use some features concretely:
 ### API
 
 * [IEX Cloud is a platform that makes financial data and services accessible to everyone](https://iexcloud.io/docs/api/)
+* [Financial Market Data Platform](https://polygon.io/)
+
+### Library
+
+* [AnyChart for Android](https://github.com/AnyChart/AnyChart-Android)
 
 
 

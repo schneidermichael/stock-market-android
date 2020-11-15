@@ -1,7 +1,7 @@
 package at.schn142.stockmarket.adapter;
 
 import android.content.Context;
-import android.icu.text.DecimalFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +15,10 @@ import java.util.List;
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
-import static android.graphics.Color.rgb;
+public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.ViewHolder> {
 
-public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.StockSearchHolder> {
-    public static final String TAG = "StockListAdapter";
-    private static DecimalFormat myFormatter = new DecimalFormat("0.000");
+    public static final String TAG = "StockSearchAdapter";
+
     private static ClickListener clickListener;
     private final LayoutInflater mInflater;
     private List<Stock> mStocks;
@@ -28,31 +27,28 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
         void onItemClick(int position, View v);
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public static class StockSearchHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // each data item is just a string in this case
-        public CardView cardView;
-        public TextView textCardViewSymbol;
-        public TextView textCardViewCompanyName;
-        public TextView textCardViewLatestPrice;
-        public TextView textCardViewChangePercent;
+        public CardView searchCardView;
+        public TextView searchTextCardViewSymbol;
+        public TextView searchTextCardViewCompanyName;
 
-        public StockSearchHolder(View itemView) {
+        public ViewHolder(View itemView) {
 
             super(itemView);
+
             itemView.setOnClickListener(this);
 
-            cardView = (CardView) itemView.findViewById(R.id.searchCardView);
-            textCardViewSymbol = (TextView) itemView.findViewById(R.id.cardTextViewSymbol);
-            textCardViewCompanyName = (TextView) itemView.findViewById(R.id.cardTextViewCompanyName);
-            textCardViewLatestPrice = (TextView) itemView.findViewById(R.id.cardTextViewLatestPrice);
-            textCardViewChangePercent = (TextView) itemView.findViewById(R.id.cardTextViewChangePercent);
+            searchCardView = itemView.findViewById(R.id.searchCardView);
+            searchTextCardViewSymbol = (TextView) itemView.findViewById(R.id.searchCardTextViewSymbol);
+            searchTextCardViewCompanyName = (TextView) itemView.findViewById(R.id.searchCardTextViewCompanyName);
 
         }
 
+
         @Override
-        public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v);
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(), view);
         }
     }
 
@@ -67,45 +63,27 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockSearchAdapter.StockSearchHolder onCreateViewHolder(ViewGroup parent,
+    public StockSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                    int viewType) {
         // create a new view
-        View itemView = mInflater.inflate(R.layout.home_card_view, parent, false);
-        return new StockSearchAdapter.StockSearchHolder(itemView);
+        View itemView = mInflater.inflate(R.layout.search_card_view, parent, false);
+        return new ViewHolder(itemView);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(StockSearchAdapter.StockSearchHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         if (mStocks != null) {
             Stock current = mStocks.get(position);
 
-            holder.textCardViewSymbol.setText(current.getSymbol());
-            holder.textCardViewCompanyName.setText(current.getCompanyName());
-            holder.textCardViewLatestPrice.setText(current.getLatestPrice());
-
-            String changePercent = "0.00";
-            try {
-                changePercent = String.valueOf(myFormatter.format(Double.parseDouble(current.getChangePercent())));
-            } catch (NumberFormatException n) {
-                n.printStackTrace();
-            }
-
-            if (current.getChangePercent().charAt(0) == '-') {
-                holder.textCardViewChangePercent.setBackgroundColor(rgb(243, 17, 0));
-                holder.textCardViewChangePercent.setText(changePercent);
-            } else {
-                holder.textCardViewChangePercent.setBackgroundColor(rgb(76, 175, 80));
-                holder.textCardViewChangePercent.setText("+" + changePercent);
-            }
-
+            holder.searchTextCardViewSymbol.setText(current.getSymbol());
+            holder.searchTextCardViewCompanyName.setText(current.getCompanyName());
 
         } else {
             // Covers the case of data not being ready yet.
-            holder.textCardViewSymbol.setText("No Word");
+            holder.searchTextCardViewSymbol.setText("No Word");
+            holder.searchTextCardViewCompanyName.setText("No Word");
         }
     }
 

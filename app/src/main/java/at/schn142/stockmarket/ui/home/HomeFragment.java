@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.ListPreference;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,20 +23,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
+import at.schn142.stockmarket.activity.StockActivity;
 import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.StockViewModel;
 import at.schn142.stockmarket.activity.SearchActivity;
 import at.schn142.stockmarket.adapter.StockListAdapter;
-import at.schn142.stockmarket.ui.settings.SettingsFragment;
+
+import static android.widget.LinearLayout.VERTICAL;
 
 public class HomeFragment extends Fragment {
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-
+    public static final int NEW_STOCK_ACTIVITY_REQUEST_CODE = 1;
 
     private StockViewModel mStockViewModel;
     private RecyclerView stockRecyclerView;
-    private StockListAdapter mAdapter;
+    private DividerItemDecoration stockItemDecor;
+    private StockListAdapter stockListAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,18 +47,22 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(getContext());
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String switchPref = sharedPref.getString("pref_sort","asc");
         
-        stockRecyclerView = root.findViewById(R.id.stock_recycler_view);
-        mAdapter = new StockListAdapter(root.getContext());
+        stockRecyclerView =  (RecyclerView) root.findViewById(R.id.stock_recycler_view);
+        layoutManager = new LinearLayoutManager(getActivity());
 
-        layoutManager = new LinearLayoutManager(root.getContext());
+        stockListAdapter = new StockListAdapter(getActivity());
+
         stockRecyclerView.setLayoutManager(layoutManager);
-        stockRecyclerView.setAdapter(mAdapter);
 
-        // Get a new or existing ViewModel from the ViewModelProvider.
+        stockItemDecor = new DividerItemDecoration(getActivity(), VERTICAL);
+        stockRecyclerView.addItemDecoration(stockItemDecor);
+
+        stockRecyclerView.setAdapter(stockListAdapter);
+
         mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
         mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
@@ -64,9 +70,19 @@ public class HomeFragment extends Fragment {
             public void onChanged(List<Stock> stocks) {
 
                 if (switchPref.equals("asc")){
-                    mAdapter.sortStocksAsc(stocks);
+                    stockListAdapter.sortStocksAsc(stocks);
                 }else
-                    mAdapter.sortStocksDesc(stocks);
+                    stockListAdapter.sortStocksDesc(stocks);
+            }
+        });
+
+        stockListAdapter.setOnItemClickListener(new StockListAdapter.ClickListener(){
+
+            @Override
+            public void onItemClick(int position, View v) {
+
+                Intent intent = new Intent (v.getContext(), StockActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
 
@@ -75,9 +91,9 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(root.getContext(), SearchActivity.class);
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 //Ansonsten ist der Return Code falsch -> Fragment
-                getActivity().startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                getActivity().startActivityForResult(intent, NEW_STOCK_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -96,8 +112,8 @@ public class HomeFragment extends Fragment {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Stock stock = mAdapter.getStockAtPosition(position);
-                        Toast.makeText(root.getContext(), "Deleting " +
+                        Stock stock = stockListAdapter.getStockAtPosition(position);
+                        Toast.makeText(getActivity(), "Deleting " +
                                 stock.getCompanyName(), Toast.LENGTH_LONG).show();
 
 
@@ -106,7 +122,6 @@ public class HomeFragment extends Fragment {
                 });
 
         helper.attachToRecyclerView(stockRecyclerView);
-
 
         return root;
     }

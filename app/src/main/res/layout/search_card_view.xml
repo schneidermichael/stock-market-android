@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A CardView that contains a TextView -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/searchCardView"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_margin="10dp"
     android:orientation="vertical"
-    card_view:cardElevation="20dp">
+    card_view:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLinearLayout"
@@ -16,11 +13,11 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/cardTextViewSymbol"
+            android:id="@+id/searchCardTextViewSymbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:text="@string/element_symbol"
             android:textAlignment="textStart"
             android:textColor="@color/black"
@@ -29,40 +26,16 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cardTextViewCompanyName"
+            android:id="@+id/searchCardTextViewCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/element_company_name"
-            android:textAlignment="textStart"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/cardTextViewLatestPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/element_latest_price"
             android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/cardTextViewChangePercent"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/element_change_percent"
-            android:textAlignment="textEnd"
-            android:textColor="@color/white"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

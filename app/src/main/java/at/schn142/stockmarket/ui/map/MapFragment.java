@@ -35,7 +35,6 @@ public class MapFragment extends Fragment {
 
     public static final String TAG = "MapFragment";
 
-    private MapViewModel mapViewModel;
 
     private MapViewLite mapView;
     private PlatformPositioningProvider platformPositioningProvider;
@@ -45,8 +44,7 @@ public class MapFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel =
-                new ViewModelProvider(this).get(MapViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
         // Get a MapViewLite instance from the layout.

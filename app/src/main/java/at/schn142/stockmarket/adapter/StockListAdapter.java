@@ -1,90 +1,111 @@
 package at.schn142.stockmarket.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.icu.text.DecimalFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.shape.CornerFamily;
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 import java.util.Collections;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
-import at.schn142.stockmarket.activity.StockActivity;
 
 import static android.graphics.Color.rgb;
 
-public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.StockListHolder> {
+public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.ViewHolder> {
 
     public static final String TAG = "StockListAdapter";
-    private static DecimalFormat myFormatter = new DecimalFormat("0.000");
 
+    private static DecimalFormat myFormatter = new DecimalFormat("0.00");
+    private static StockListAdapter.ClickListener clickListener;
     private final LayoutInflater mInflater;
-    private List<Stock> mStocks; // Cached copy of stocks
+    private List<Stock> mStocks;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class StockListHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public CardView cardView;
-        public TextView textCardViewSymbol;
-        public TextView textCardViewCompanyName;
-        public TextView textCardViewLatestPrice;
-        public TextView textCardViewChangePercent;
 
-        public StockListHolder(View itemView){
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        public CardView stockListCardView;
+        public TextView stockListTextCardViewSymbol;
+        public TextView stockListCardViewCompanyName;
+        public TextView stockListCardViewLatestPrice;
+        public TextView stockListCardViewChangePercent;
+
+        public ViewHolder(View itemView){
+
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                    Intent intent = new Intent (v.getContext(), StockActivity.class);
-                    v.getContext().startActivity(intent);
-                }
-            });
-            cardView = (CardView) itemView.findViewById(R.id.searchCardView);
-            textCardViewSymbol = (TextView) itemView.findViewById(R.id.cardTextViewSymbol);
-            textCardViewCompanyName = (TextView) itemView.findViewById(R.id.cardTextViewCompanyName);
-            textCardViewLatestPrice = (TextView) itemView.findViewById(R.id.cardTextViewLatestPrice);
-            textCardViewChangePercent = (TextView) itemView.findViewById(R.id.cardTextViewChangePercent);
+
+            itemView.setOnClickListener(this);
+
+            stockListCardView = itemView.findViewById(R.id.listStockCardView);
+            stockListTextCardViewSymbol = (TextView) itemView.findViewById(R.id.listStockCardTextViewSymbol);
+            stockListCardViewCompanyName = (TextView) itemView.findViewById(R.id.listStockCardTextViewCompanyName);
+            stockListCardViewLatestPrice = (TextView) itemView.findViewById(R.id.listStockCardTextViewLatestPrice);
+            stockListCardViewChangePercent = (TextView) itemView.findViewById(R.id.listStockCardTextViewChangePercent);
 
         }
+
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(), view);
+        }
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        StockListAdapter.clickListener = clickListener;
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public StockListAdapter(Context context) {
+
         mInflater = LayoutInflater.from(context);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockListAdapter.StockListHolder onCreateViewHolder(ViewGroup parent,
+    public StockListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
         // create a new view
         View itemView = mInflater.inflate(R.layout.home_card_view, parent, false);
-        return new StockListHolder(itemView);
+        return new ViewHolder(itemView);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(StockListHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+        ShapeAppearanceModel shapeAppearanceModel = new ShapeAppearanceModel()
+                .toBuilder()
+                .setAllCorners(CornerFamily.ROUNDED,8)
+                .build();
+
+        MaterialShapeDrawable shapeDrawable = new MaterialShapeDrawable(shapeAppearanceModel);
 
         if (mStocks != null) {
             Stock current = mStocks.get(position);
 
-            holder.textCardViewSymbol.setText(current.getSymbol());
-            holder.textCardViewCompanyName.setText(current.getCompanyName());
-            holder.textCardViewLatestPrice.setText(current.getLatestPrice());
+            holder.stockListTextCardViewSymbol.setText(current.getSymbol());
+            holder.stockListCardViewCompanyName.setText(current.getCompanyName());
+            holder.stockListCardViewLatestPrice.setText(current.getLatestPrice());
 
             String changePercent = "0.00";
             try {
@@ -94,15 +115,21 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Stoc
             }
 
             if(current.getChangePercent().charAt(0)== '-'){
-                holder.textCardViewChangePercent.setBackgroundColor(rgb(243,17,0));
-                holder.textCardViewChangePercent.setText(changePercent);
+                shapeDrawable.setFillColor(ContextCompat.getColorStateList(mInflater.getContext(),R.color.red));
+                holder.stockListCardViewChangePercent.setText(changePercent);
             }else{
-                holder.textCardViewChangePercent.setBackgroundColor(rgb(76,175,80));
-                holder.textCardViewChangePercent.setText("+"+changePercent);
+                shapeDrawable.setFillColor(ContextCompat.getColorStateList(mInflater.getContext(),R.color.green));
+                holder.stockListCardViewChangePercent.setText("+"+changePercent);
             }
+
+            ViewCompat.setBackground(holder.stockListCardViewChangePercent,shapeDrawable);
+
         } else {
             // Covers the case of data not being ready yet.
-            holder.textCardViewSymbol.setText("No Word");
+            holder.stockListTextCardViewSymbol.setText("No Word");
+            holder.stockListCardViewCompanyName.setText("No Word");
+            holder.stockListCardViewLatestPrice.setText("No Word");
+            holder.stockListTextCardViewSymbol.setText("No Word");
         }
     }
 

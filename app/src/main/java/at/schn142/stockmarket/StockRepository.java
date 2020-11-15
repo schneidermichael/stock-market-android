@@ -162,6 +162,7 @@ class StockRepository {
 
         try {
             urlConnection.setRequestMethod("GET");
+            //TODO Error in Log
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
