@@ -28,7 +28,7 @@ import static android.widget.LinearLayout.VERTICAL;
 
 public class SearchActivity extends AppCompatActivity {
 
-    public static final String TAG = "StockSearchActivity";
+    public static final String TAG = "SearchActivity";
     public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
     private StockViewModel mStockViewModel;
@@ -66,14 +66,16 @@ public class SearchActivity extends AppCompatActivity {
 
         searchAdapter.setOnItemClickListener(new StockSearchAdapter.ClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
+            public void onItemClick(int position, View v) throws InterruptedException {
                 Stock stock = searchAdapter.getStockAtPosition(position);
+                Stock newStock = mStockViewModel.searchStock(stock.getSymbol());
                 Log.d(TAG,stock.getCompanyName());
                 Intent replyIntent = new Intent();
                 if (stock.getCompanyName().isEmpty()) {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
-                    mStockViewModel.insert(stock);
+
+                    mStockViewModel.insert(newStock);
                     replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
                     setResult(RESULT_OK, replyIntent);
                 }
@@ -83,14 +85,14 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void searchIexCloud(String searchQuery){
+    private void search(String searchQuery){
 
         Context context = SearchActivity.this;
 
         if(searchQuery.equals("")){
             Toast.makeText(context, "Please enter a search term.", Toast.LENGTH_SHORT).show();
         }else{
-            mStockViewModel.searchIexCloud(searchQuery);
+            mStockViewModel.search(searchQuery);
         }
     }
 
@@ -103,14 +105,16 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setQueryHint("Type a stocks symbol");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String s) {
-                searchIexCloud(s);
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                search(s);
                 return false;
             }
         });

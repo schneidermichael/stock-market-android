@@ -24,7 +24,7 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
     private List<Stock> mStocks;
 
     public interface ClickListener {
-        void onItemClick(int position, View v);
+        void onItemClick(int position, View v) throws InterruptedException;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -48,7 +48,11 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
 
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(getAdapterPosition(), view);
+            try {
+                clickListener.onItemClick(getAdapterPosition(), view);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

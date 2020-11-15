@@ -109,6 +109,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
 
             String changePercent = "0.00";
             try {
+
                 changePercent = String.valueOf(myFormatter.format(Double.parseDouble(current.getChangePercent())));
             }catch (NumberFormatException n){
                 n.printStackTrace();

@@ -36,12 +36,16 @@ public class StockViewModel extends AndroidViewModel {
         mRepository.insert(stock);
     }
 
-    public void deleteStock(Stock stock) {mRepository.deleteStock(stock);}
+    public void update(Stock stock) {mRepository.update(stock); }
+
+    public void delete(Stock stock) {mRepository.delete(stock);}
 
     public void deleteAll() {mRepository.deleteAll();}
 
-    public void searchIexCloud(String searchQuery) {
+    public void search(String searchQuery) {
         mRepository.searchIexCloud(searchQuery);
     }
+
+    public Stock searchStock(String symbol) throws InterruptedException { return mRepository.searchStock(symbol);}
 
 }

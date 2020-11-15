@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                                 stock.getCompanyName(), Toast.LENGTH_LONG).show();
 
 
-                        mStockViewModel.deleteStock(stock);
+                        mStockViewModel.delete(stock);
                     }
                 });
 

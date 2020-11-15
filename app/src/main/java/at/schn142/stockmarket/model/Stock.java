@@ -3,6 +3,7 @@ package at.schn142.stockmarket.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "stock_table")
@@ -28,6 +29,18 @@ public class Stock implements Comparable<Stock>{
         this.latestPrice = latestPrice;
         this.changePercent = changePercent;
     }
+
+    @Ignore
+    public Stock(String symbol, String companyName) {
+        this.symbol = symbol;
+        this.companyName = companyName;
+    }
+
+    @Ignore
+    public Stock(){
+
+    }
+
     public String getSymbol(){
         return this.symbol;
     }
