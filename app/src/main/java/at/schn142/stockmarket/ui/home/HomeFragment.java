@@ -18,8 +18,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
@@ -34,6 +40,9 @@ import static android.widget.LinearLayout.VERTICAL;
 public class HomeFragment extends Fragment {
 
     public static final int NEW_STOCK_ACTIVITY_REQUEST_CODE = 1;
+    public static final String SYMBOL = "at.schn142.stockmarket.ui.home.SYMBOL";
+    public static final String COMPANYNAME = "at.schn142.stockmarket.ui.home.COMPANYNAME";
+
 
     private StockViewModel mStockViewModel;
     private RecyclerView stockRecyclerView;
@@ -82,6 +91,9 @@ public class HomeFragment extends Fragment {
             public void onItemClick(int position, View v) {
 
                 Intent intent = new Intent (v.getContext(), StockActivity.class);
+                Stock stock = stockListAdapter.getStockAtPosition(position);
+                intent.putExtra(SYMBOL,stock.getSymbol());
+                intent.putExtra(COMPANYNAME,stock.getCompanyName());
                 v.getContext().startActivity(intent);
             }
         });

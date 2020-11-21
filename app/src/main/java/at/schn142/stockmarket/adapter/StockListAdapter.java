@@ -13,10 +13,16 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +44,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     public interface ClickListener {
         void onItemClick(int position, View v);
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

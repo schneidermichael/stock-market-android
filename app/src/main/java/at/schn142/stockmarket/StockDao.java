@@ -12,6 +12,7 @@ import java.util.List;
 
 import at.schn142.stockmarket.model.Stock;
 
+
 @Dao
 public interface StockDao {
 
@@ -20,7 +21,6 @@ public interface StockDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Stock stock);
 
-    //TODO zu delete ändern
     @Delete
     void delete(Stock stock);
 

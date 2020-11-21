@@ -1,6 +1,5 @@
 package at.schn142.stockmarket.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,10 +86,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private void search(String searchQuery){
 
-        Context context = SearchActivity.this;
-
         if(searchQuery.equals("")){
-            Toast.makeText(context, "Please enter a search term.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchActivity.this, "Please enter a search term.", Toast.LENGTH_SHORT).show();
         }else{
             mStockViewModel.search(searchQuery);
         }

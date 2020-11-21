@@ -20,7 +20,6 @@
     <string name="preference_delete_all">Delete All Stocks</string>
     <string name="pref_sort">Sortierung</string>
 
-
     <!-- Fragments -->
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
@@ -30,5 +29,14 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
+
+    <string name="button_five_year">5Y</string>
+    <string name="button_two_year">2Y</string>
+    <string name="button_one_year">1Y</string>
+    <string name="button_six_month">6M</string>
+    <string name="button_three_month">3M</string>
+    <string name="button_one_month">1M</string>
+    <string name="button_five_day">1W</string>
+
 
 </resources>
