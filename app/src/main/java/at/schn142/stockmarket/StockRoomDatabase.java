@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 
 import at.schn142.stockmarket.model.Stock;
 
-@Database(entities = {Stock.class}, version = 2, exportSchema = false)
+@Database(entities = {Stock.class}, version = 5, exportSchema = false)
 public abstract class StockRoomDatabase extends RoomDatabase {
 
     public abstract StockDao stockDao();

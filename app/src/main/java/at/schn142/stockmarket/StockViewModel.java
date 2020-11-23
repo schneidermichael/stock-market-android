@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.anychart.chart.common.dataentry.DataEntry;
 
@@ -58,5 +57,9 @@ public class StockViewModel extends AndroidViewModel {
     public void getDataEntryForOHLC(String symbol, StockRange range) { mRepository.getDataEntryForOHLC(symbol,range);}
 
     public LiveData<List<DataEntry>> getData() {return mData;}
+
+    public List<DataEntry> getLineChartData(String symbolOne, String symbolTwo){
+        return mRepository.getLineChartData(symbolOne,symbolTwo);
+    }
 
 }

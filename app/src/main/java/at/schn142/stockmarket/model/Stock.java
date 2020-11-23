@@ -1,10 +1,16 @@
 package at.schn142.stockmarket.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.TransitionRes;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import kotlin.jvm.Transient;
+
+
+//SUPPORTS ONLY FOLLOWING DATA TYPES: TEXT, INTEGER, BLOB, REAL and UNDEFINED.
 
 @Entity(tableName = "stock_table")
 public class Stock implements Comparable<Stock>{
@@ -22,6 +28,9 @@ public class Stock implements Comparable<Stock>{
 
     @ColumnInfo(name = "changePercent")
     private String changePercent;
+
+    @ColumnInfo(name = "isChecked")
+    private boolean isChecked = false;
 
     public Stock(String symbol, String companyName, String latestPrice, String changePercent) {
         this.symbol = symbol;
@@ -55,6 +64,14 @@ public class Stock implements Comparable<Stock>{
 
     public String getChangePercent() {
         return changePercent;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     @Override

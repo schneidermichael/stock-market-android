@@ -1,11 +1,8 @@
 package at.schn142.stockmarket;
 
 import android.app.Application;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -20,14 +17,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import at.schn142.stockmarket.model.OHCLDataEntry;
+import at.schn142.stockmarket.model.LineDataEntry;
+import at.schn142.stockmarket.model.StockDataEntry;
 import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.model.StockRange;
 
@@ -41,15 +36,21 @@ class StockRepository {
 
     private LiveData<List<Stock>> mAllStocks;
 
+    private MutableLiveData<List<DataEntry>> mData;
+
+    private Stock mStock;
+
     private Thread searchThread;
 
     private Thread stockThread;
 
     private Thread stockDataEntryThread;
 
-    private MutableLiveData<List<DataEntry>> mData;
+    private Thread deleteThread;
 
-    private Stock mStock;
+    private Thread deleteAllThread;
+
+    private Thread lineDataEntryThread;
 
     StockRepository(Application application) {
         StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
@@ -67,7 +68,7 @@ class StockRepository {
         return mAllStocks;
     }
 
-    MutableLiveData<List<DataEntry>> getData(){
+    MutableLiveData<List<DataEntry>> getData() {
         return mData;
     }
 
@@ -79,58 +80,49 @@ class StockRepository {
 
     void update(Stock stock) {
         StockRoomDatabase.databaseWriteExecutor.execute(() -> {
-           mStockDao.update(stock);
+            mStockDao.update(stock);
         });
     }
 
-    public void deleteAll()  {
-        new deleteAllStocksAsyncTask(mStockDao).execute();
+    public void deleteAll() {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mStockDao.deleteAll();
+            }
+        };
+        if (deleteAllThread != null) {
+            deleteAllThread.interrupt();
+        }
+        deleteAllThread = new Thread(runnable);
+        deleteAllThread.start();
+
     }
 
-    public void delete(Stock stock)  {
-        new deleteAsyncTask(mStockDao).execute(stock);
+    public void delete(Stock stock) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mStockDao.delete(stock);
+            }
+        };
+        if (deleteThread != null) {
+            deleteThread.interrupt();
+        }
+        deleteThread = new Thread(runnable);
+        deleteThread.start();
+
     }
 
-    //TODO replace with thread
-    private static class deleteAllStocksAsyncTask extends AsyncTask<Void, Void, Void> {
-        private StockDao mAsyncTaskDao;
-
-        deleteAllStocksAsyncTask(StockDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mAsyncTaskDao.deleteAll();
-            return null;
-        }
-    }
-
-
-    //TODO replace with thread
-    private static class deleteAsyncTask extends AsyncTask<Stock, Void, Void> {
-        private StockDao mAsyncTaskDao;
-
-        deleteAsyncTask(StockDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Stock... params) {
-            mAsyncTaskDao.delete(params[0]);
-            return null;
-        }
-    }
-
-    public void getDataEntryForOHLC(String symbol, StockRange range){
+    public void getDataEntryForOHLC(String symbol, StockRange range) {
 
         Runnable fetchDataRunnable = new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
             public void run() {
 
                 try {
-                    URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/"+symbol+"/chart/"+range.getText()+"?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+                    URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbol + "/chart/" + range.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
 
                     String response = "";
                     try {
@@ -144,20 +136,19 @@ class StockRepository {
                     JSONArray array = new JSONArray(response);
                     JSONObject object;
 
-                    for(int i = 0; i < array.length(); i++){
+                    for (int i = 0; i < array.length(); i++) {
                         object = (JSONObject) array.get(i);
                         String stringDate = object.getString("date");
-                        Long date = dateToLong(stringDate);
+                        //     Long date = dateToLong(stringDate);
                         Double open = object.getDouble("open");
                         Double close = object.getDouble("close");
                         Double high = object.getDouble("high");
                         Double low = object.getDouble("low");
 
-                        runnableData.add(new OHCLDataEntry(date,open,close,high,low));
+                        runnableData.add(new StockDataEntry(stringDate, open, close, high, low));
                     }
 
                     mData.postValue(runnableData);
-
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -175,7 +166,80 @@ class StockRepository {
 
     }
 
+    public List<DataEntry> getLineChartData(String symbolOne, String symbolTwo) {
 
+        List<DataEntry> data = new ArrayList<>();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                List<DataEntry> runData = new ArrayList<>();
+
+                try {
+                    URL symbolOneUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbolOne + "/chart/" + StockRange.fiveYear.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+                    URL symbolTwoUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbolTwo + "/chart/" + StockRange.fiveYear.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+
+                    String responseSymbolOne = "";
+                    String responseSymbolTwo = "";
+                    try {
+                        responseSymbolOne = getResponseFromHttpUrl(symbolOneUrl);
+                        responseSymbolTwo = getResponseFromHttpUrl(symbolTwoUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    JSONArray arrayOne = new JSONArray(responseSymbolOne);
+                    JSONArray arrayTwo = new JSONArray(responseSymbolTwo);
+
+                    JSONObject objectOne;
+                    JSONObject objectTwo;
+
+                    if (arrayOne.length() == arrayTwo.length()) {
+
+                        for (int i = 0; i < arrayOne.length(); i++) {
+
+                            //Array1
+                            objectOne = (JSONObject) arrayOne.get(i);
+                            String stringDate = objectOne.getString("date");
+                            Double closeOne = objectOne.getDouble("close");
+
+                            //Array2
+                            objectTwo = (JSONObject) arrayTwo.get(i);
+                            Double closeTwo = objectTwo.getDouble("close");
+
+                            data.add(new LineDataEntry(stringDate, closeOne, closeTwo));
+                        }
+
+                    } else
+                        Log.i("TAG", "Can't compare");
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        if (lineDataEntryThread != null) {
+            lineDataEntryThread.interrupt();
+        }
+        lineDataEntryThread = new Thread(runnable);
+        lineDataEntryThread.start();
+
+        try {
+            lineDataEntryThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return data;
+
+    }
+
+    //TODO Einheitliche API verwenden, wegen unterschiedlichen SYMBOLEN
+    //TODO Doppelte Aktien markieren oder nicht anzeigen
 
     public Stock searchStock(String symbol) throws InterruptedException {
 
@@ -184,7 +248,7 @@ class StockRepository {
             public void run() {
 
                 try {
-                    URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/"+symbol+"/quote?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+                    URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbol + "/quote?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
 
                     String response = "";
                     try {
@@ -192,7 +256,7 @@ class StockRepository {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
+                    Log.i(TAG, response);
                     JSONObject object = new JSONObject(response);
 
                     Stock stock = new Stock(object.getString("symbol"),
@@ -229,7 +293,7 @@ class StockRepository {
             public void run() {
 
                 try {
-                    URL searchUrl = new URL("https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords="+searchQuery+"&apikey=5O7CMDACW9L0M2OQ");
+                    URL searchUrl = new URL("https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + searchQuery + "&apikey=5O7CMDACW9L0M2OQ");
                     List<Stock> postList = new ArrayList<>();
                     String response = "";
 
@@ -240,23 +304,27 @@ class StockRepository {
                     }
 
                     JSONObject entryPointSearchJSONObject = new JSONObject(response);
+                    JSONArray jsonArray = entryPointSearchJSONObject.optJSONArray("bestMatches");
 
-                    JSONArray jsonArray = entryPointSearchJSONObject.getJSONArray("bestMatches");
+                    if (entryPointSearchJSONObject != null) {
+                        JSONObject searchItemJSONObject = new JSONObject();
 
-                    JSONObject searchItemJSONObject = new JSONObject();
+                        if (jsonArray != null) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                searchItemJSONObject = (JSONObject) jsonArray.get(i);
+                                postList.add(new Stock(searchItemJSONObject.getString("1. symbol"), searchItemJSONObject.getString("2. name")));
+                            }
+                        }
+                        Log.i("TREFFER: ", String.valueOf(postList.size()));
 
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        searchItemJSONObject = (JSONObject) jsonArray.get(i);
-                        postList.add(new Stock(searchItemJSONObject.getString("1. symbol"),searchItemJSONObject.getString("2. name")));
-
-                    }
-
-                    //TODO Exception Handling
-                    Log.i(TAG, String.valueOf(postList.size()));
-                    if (postList.isEmpty()) {
-                        postList.clear();
-                    }
+                        if (postList.isEmpty() || postList.size() < 1) {
+                            postList.clear();
+                            if (!searchQuery.isEmpty()) {
+                                postList.add((new Stock("", "No results for \"" + searchQuery + "\"")));
+                            }
+                        }
                         mSearchStocks.postValue(postList);
+                    }
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -279,14 +347,11 @@ class StockRepository {
 
     private String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = null;
-
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
-            //TODO Error in Log
             InputStream in = urlConnection.getInputStream();
-
 
             Scanner scanner = new Scanner(in);
             scanner.useDelimiter("\\A");
@@ -301,16 +366,16 @@ class StockRepository {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private long dateToLong(String stringDate){
-
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        long millisecondsSinceEpoch = LocalDate.parse(stringDate, dateFormatter)
-                .atStartOfDay(ZoneOffset.UTC)
-                .toInstant()
-                .toEpochMilli();
-        return millisecondsSinceEpoch;
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private long stringToLong(String stringDate){
+//
+//        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+//        long millisecondsSinceEpoch = LocalDate.parse(stringDate, dateFormatter)
+//                .atStartOfDay(ZoneOffset.UTC)
+//                .toInstant()
+//                .toEpochMilli();
+//        return millisecondsSinceEpoch;
+//    }
 
 
 }

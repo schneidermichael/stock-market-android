@@ -1,12 +1,12 @@
 package at.schn142.stockmarket.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -14,7 +14,6 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
-import com.anychart.enums.StockSeriesType;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
@@ -31,7 +30,6 @@ public class StockActivity extends AppCompatActivity {
 
     public static final String TAG = "StockActivity";
 
-
     private StockViewModel mStockViewModel;
 
     private MaterialButtonToggleGroup toggleGroup;
@@ -43,7 +41,11 @@ public class StockActivity extends AppCompatActivity {
     private MaterialButton buttonTwoYear;
     private MaterialButton buttonFiveYear;
     private StockRange range;
-    private List<DataEntry> data;
+    private Table table;
+    private AnyChartView anyChartView;
+    private TableMapping mapping;
+    private Stock stock;
+    private Plot plot;
 
 
     @Override
@@ -68,7 +70,9 @@ public class StockActivity extends AppCompatActivity {
         buttonTwoYear = findViewById(R.id.button_two_year);
         buttonFiveYear = findViewById(R.id.button_five_year);
 
-        range = StockRange.threeMonth;
+        range = StockRange.fiveDay;
+
+        mStockViewModel.getDataEntryForOHLC(symbol, range);
 
         toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
 
@@ -107,28 +111,25 @@ public class StockActivity extends AppCompatActivity {
             }
         });
 
-        AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progress_bar));
+        anyChartView = findViewById(R.id.any_chart_view_stock);
+        anyChartView.setProgressBar(findViewById(R.id.progress_bar_stock));
 
-        Table table = Table.instantiate("x");
+        table = Table.instantiate("x");
 
-        //TODO erst nachdem dem betätigen des ersten Toggle-Button erscheint der erste Chart
         mStockViewModel.getData().observe(this, new Observer<List<DataEntry>>() {
             @Override
             public void onChanged(List<DataEntry> dataEntries) {
-                data = dataEntries;
-                table.addData(data);
+                //Funktioniert leider nicht rückwärts
+                APIlib.getInstance().setActiveAnyChartView(anyChartView);
+                table.addData(dataEntries);
             }
         });
 
-        TableMapping mapping = table.mapAs("{open: 'open', high: 'high', low: 'low', close: 'close'}");
+        mapping = table.mapAs("{open: 'open', high: 'high', low: 'low', close: 'close'}");
 
-        Stock stock = AnyChart.stock();
+        stock = AnyChart.stock();
 
-        Plot plot = stock.plot(0);
-
-
-        plot.ema(table.mapAs("{value: 'close'}"), 20d, StockSeriesType.LINE);
+        plot = stock.plot(0);
 
         plot.ohlc(mapping)
                 .name(symbol)
@@ -138,10 +139,7 @@ public class StockActivity extends AppCompatActivity {
 
         stock.scroller().ohlc(mapping);
 
-
-
         anyChartView.setChart(stock);
-
     }
 
 }

@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_stock">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="at.schn142.stockmarket.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_stock"
+        android:name="at.schn142.stockmarket.ui.stock.StockFragment"
+        android:label="@string/navigation_stock"
+        tools:layout="@layout/fragment_stock" />
 
     <fragment
-        android:id="@+id/navigation_map"
-        android:name="at.schn142.stockmarket.ui.map.MapFragment"
-        android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
+        android:id="@+id/navigation_compare"
+        android:name="at.schn142.stockmarket.ui.compare.CompareFragment"
+        android:label="@string/navigation_compare"
+        tools:layout="@layout/fragment_compare" />
 
     <fragment
         android:id="@+id/navigation_settings"
         android:name="at.schn142.stockmarket.ui.settings.SettingsFragment"
-        android:label="@string/title_settings"
+        android:label="@string/navigation_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

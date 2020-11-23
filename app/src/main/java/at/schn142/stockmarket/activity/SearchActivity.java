@@ -2,6 +2,7 @@ package at.schn142.stockmarket.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,7 @@ public class SearchActivity extends AppCompatActivity {
     private DividerItemDecoration searchItemDecor;
     private StockSearchAdapter searchAdapter;
     private RecyclerView.LayoutManager searchlayoutManager;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,30 +69,24 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) throws InterruptedException {
                 Stock stock = searchAdapter.getStockAtPosition(position);
-                Stock newStock = mStockViewModel.searchStock(stock.getSymbol());
-                Log.d(TAG,stock.getCompanyName());
-                Intent replyIntent = new Intent();
-                if (stock.getCompanyName().isEmpty()) {
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
+                if (!stock.getSymbol().equalsIgnoreCase("")) {
 
-                    mStockViewModel.insert(newStock);
-                    replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
-                    setResult(RESULT_OK, replyIntent);
+                    Stock newStock = mStockViewModel.searchStock(stock.getSymbol());
+                    Log.d(TAG, stock.getCompanyName());
+                    Intent replyIntent = new Intent();
+                    if (stock.getCompanyName().isEmpty()) {
+                        setResult(RESULT_CANCELED, replyIntent);
+                    } else {
+
+                        mStockViewModel.insert(newStock);
+                        replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
+                        setResult(RESULT_OK, replyIntent);
+                    }
+                    finish();
                 }
-                finish();
             }
 
         });
-    }
-
-    private void search(String searchQuery){
-
-        if(searchQuery.equals("")){
-            Toast.makeText(SearchActivity.this, "Please enter a search term.", Toast.LENGTH_SHORT).show();
-        }else{
-            mStockViewModel.search(searchQuery);
-        }
     }
 
     @Override
@@ -104,20 +100,24 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
 
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                search(s);
-                return false;
+            public boolean onQueryTextChange(String query) {
+                handler.removeCallbacksAndMessages(null);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mStockViewModel.search(query);
+                    }
+                }, 750);
+                return true;
             }
         });
-
         return true;
     }
-
-
 }

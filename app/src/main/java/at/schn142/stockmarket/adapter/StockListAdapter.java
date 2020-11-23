@@ -10,19 +10,12 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Pie;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,19 +33,17 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     private final LayoutInflater mInflater;
     private List<Stock> mStocks;
 
-
     public interface ClickListener {
         void onItemClick(int position, View v);
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public CardView stockListCardView;
-        public TextView stockListTextCardViewSymbol;
-        public TextView stockListCardViewCompanyName;
-        public TextView stockListCardViewLatestPrice;
-        public TextView stockListCardViewChangePercent;
+        private CardView stockListCardView;
+        private TextView stockListTextCardViewSymbol;
+        private TextView stockListCardViewCompanyName;
+        private TextView stockListCardViewLatestPrice;
+        private TextView stockListCardViewChangePercent;
 
         public ViewHolder(View itemView){
 
@@ -80,17 +71,13 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StockListAdapter(Context context) {
-
-        mInflater = LayoutInflater.from(context);
-    }
+    public StockListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                            int viewType) {
-        // create a new view
-        View itemView = mInflater.inflate(R.layout.home_card_view, parent, false);
+    public StockListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView = mInflater.inflate(R.layout.stock_card_view, parent, false);
         return new ViewHolder(itemView);
     }
 
