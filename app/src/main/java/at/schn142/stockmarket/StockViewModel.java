@@ -42,8 +42,6 @@ public class StockViewModel extends AndroidViewModel {
         mRepository.insert(stock);
     }
 
-    public void update(Stock stock) {mRepository.update(stock); }
-
     public void delete(Stock stock) {mRepository.delete(stock);}
 
     public void deleteAll() {mRepository.deleteAll();}
@@ -52,7 +50,7 @@ public class StockViewModel extends AndroidViewModel {
         mRepository.searchIexCloud(searchQuery);
     }
 
-    public Stock searchStock(String symbol) throws InterruptedException { return mRepository.searchStock(symbol);}
+    public Stock searchStock(String symbol) { return mRepository.searchStock(symbol);}
 
     public void getDataEntryForOHLC(String symbol, StockRange range) { mRepository.getDataEntryForOHLC(symbol,range);}
 
@@ -62,4 +60,6 @@ public class StockViewModel extends AndroidViewModel {
         return mRepository.getLineChartData(symbolOne,symbolTwo);
     }
 
+    public void updateAll() { mRepository.updateAll();
+    }
 }

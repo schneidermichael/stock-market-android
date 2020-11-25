@@ -40,17 +40,7 @@ class StockRepository {
 
     private Stock mStock;
 
-    private Thread searchThread;
-
-    private Thread stockThread;
-
-    private Thread stockDataEntryThread;
-
-    private Thread deleteThread;
-
-    private Thread deleteAllThread;
-
-    private Thread lineDataEntryThread;
+    private Thread thread;
 
     StockRepository(Application application) {
         StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
@@ -92,11 +82,11 @@ class StockRepository {
                 mStockDao.deleteAll();
             }
         };
-        if (deleteAllThread != null) {
-            deleteAllThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        deleteAllThread = new Thread(runnable);
-        deleteAllThread.start();
+        thread = new Thread(runnable);
+        thread.start();
 
     }
 
@@ -108,17 +98,17 @@ class StockRepository {
                 mStockDao.delete(stock);
             }
         };
-        if (deleteThread != null) {
-            deleteThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        deleteThread = new Thread(runnable);
-        deleteThread.start();
+        thread = new Thread(runnable);
+        thread.start();
 
     }
 
     public void getDataEntryForOHLC(String symbol, StockRange range) {
 
-        Runnable fetchDataRunnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             public void run() {
 
                 try {
@@ -158,11 +148,11 @@ class StockRepository {
             }
         };
 
-        if (stockDataEntryThread != null) {
-            stockDataEntryThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        stockDataEntryThread = new Thread(fetchDataRunnable);
-        stockDataEntryThread.start();
+        thread = new Thread(runnable);
+        thread.start();
 
     }
 
@@ -173,8 +163,6 @@ class StockRepository {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-
-                List<DataEntry> runData = new ArrayList<>();
 
                 try {
                     URL symbolOneUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbolOne + "/chart/" + StockRange.fiveYear.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
@@ -212,7 +200,7 @@ class StockRepository {
                         }
 
                     } else
-                        Log.i("TAG", "Can't compare");
+                        Log.i(TAG, "Can't compare");
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -222,14 +210,14 @@ class StockRepository {
             }
         };
 
-        if (lineDataEntryThread != null) {
-            lineDataEntryThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        lineDataEntryThread = new Thread(runnable);
-        lineDataEntryThread.start();
+        thread = new Thread(runnable);
+        thread.start();
 
         try {
-            lineDataEntryThread.join();
+            thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -238,12 +226,9 @@ class StockRepository {
 
     }
 
-    //TODO Einheitliche API verwenden, wegen unterschiedlichen SYMBOLEN
-    //TODO Doppelte Aktien markieren oder nicht anzeigen
+    public Stock searchStock(String symbol) {
 
-    public Stock searchStock(String symbol) throws InterruptedException {
-
-        Runnable fetchStockRunnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
 
@@ -255,8 +240,10 @@ class StockRepository {
                         response = getResponseFromHttpUrl(stockUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
+
                     }
                     Log.i(TAG, response);
+
                     JSONObject object = new JSONObject(response);
 
                     Stock stock = new Stock(object.getString("symbol"),
@@ -276,19 +263,23 @@ class StockRepository {
 
             }
         };
-        if (stockThread != null) {
-            stockThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        stockThread = new Thread(fetchStockRunnable);
-        stockThread.start();
+        thread = new Thread(runnable);
+        thread.start();
 
-        stockThread.join();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return mStock;
     }
 
     public void searchIexCloud(String searchQuery) {
-        Runnable fetchJsonRunnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
 
@@ -312,10 +303,11 @@ class StockRepository {
                         if (jsonArray != null) {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 searchItemJSONObject = (JSONObject) jsonArray.get(i);
+
                                 postList.add(new Stock(searchItemJSONObject.getString("1. symbol"), searchItemJSONObject.getString("2. name")));
+
                             }
                         }
-                        Log.i("TREFFER: ", String.valueOf(postList.size()));
 
                         if (postList.isEmpty() || postList.size() < 1) {
                             postList.clear();
@@ -338,11 +330,11 @@ class StockRepository {
         // If the thread is not working interrupt will do nothing
         // If its working it stops the previous work and starts the
         // new runnable
-        if (searchThread != null) {
-            searchThread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
         }
-        searchThread = new Thread(fetchJsonRunnable);
-        searchThread.start();
+        thread = new Thread(runnable);
+        thread.start();
     }
 
     private String getResponseFromHttpUrl(URL url) throws IOException {
@@ -366,16 +358,50 @@ class StockRepository {
         }
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private long stringToLong(String stringDate){
-//
-//        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-//        long millisecondsSinceEpoch = LocalDate.parse(stringDate, dateFormatter)
-//                .atStartOfDay(ZoneOffset.UTC)
-//                .toInstant()
-//                .toEpochMilli();
-//        return millisecondsSinceEpoch;
-//    }
+    public void updateAll() {
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
 
+                List<Stock> stocks = getAllStocks().getValue();
+                for (Stock s : stocks){
+
+                try {
+                    URL stockUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + s.getSymbol() + "/quote?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
+
+                    String response = "";
+                    try {
+                        response = getResponseFromHttpUrl(stockUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+
+                    }
+                    Log.i(TAG, response);
+
+                    JSONObject object = new JSONObject(response);
+
+                    Stock stock = new Stock(object.getString("symbol"),
+                            object.getString("companyName"),
+                            object.getString("latestPrice"),
+                            object.getString("changePercent")
+                    );
+
+                    update(stock);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                }
+
+            }
+        };
+        if (thread != null) {
+            thread.interrupt();
+        }
+        thread = new Thread(runnable);
+        thread.start();
+    }
 }

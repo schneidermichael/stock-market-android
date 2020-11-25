@@ -12,14 +12,14 @@ import java.util.List;
 
 import at.schn142.stockmarket.model.Stock;
 
-
 @Dao
 public interface StockDao {
 
-    // allowing the insert of the same word multiple times by passing a
-    // conflict resolution strategy
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Stock stock);
+
+    @Update
+    void update(Stock stock);
 
     @Delete
     void delete(Stock stock);
@@ -29,8 +29,5 @@ public interface StockDao {
 
     @Query("SELECT * from stock_table ORDER BY symbol ASC")
     LiveData<List<Stock>> getAlphabetizedStocks();
-
-    @Update
-    void update(Stock stock);
 
 }

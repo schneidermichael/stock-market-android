@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,6 +51,8 @@ public class StockFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_stock, container, false);
+
+        setHasOptionsMenu(true);
 
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -130,4 +136,27 @@ public class StockFragment extends Fragment {
 
         return root;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.refresh) {
+            // Add a toast just for confirmation
+
+            mStockViewModel.updateAll();
+            Toast.makeText(getActivity(), "Update all stocks", Toast.LENGTH_SHORT).show();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.stock_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
 }

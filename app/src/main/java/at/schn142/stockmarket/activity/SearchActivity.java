@@ -72,18 +72,22 @@ public class SearchActivity extends AppCompatActivity {
                 if (!stock.getSymbol().equalsIgnoreCase("")) {
 
                     Stock newStock = mStockViewModel.searchStock(stock.getSymbol());
-                    Log.d(TAG, stock.getCompanyName());
-                    Intent replyIntent = new Intent();
-                    if (stock.getCompanyName().isEmpty()) {
-                        setResult(RESULT_CANCELED, replyIntent);
-                    } else {
+                    if (newStock != null) {
+                        Log.d(TAG, stock.getCompanyName());
+                        Intent replyIntent = new Intent();
+                        if (stock.getCompanyName().isEmpty()) {
+                            setResult(RESULT_CANCELED, replyIntent);
+                        } else {
 
-                        mStockViewModel.insert(newStock);
-                        replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
-                        setResult(RESULT_OK, replyIntent);
+                            mStockViewModel.insert(newStock);
+                            replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
+                            setResult(RESULT_OK, replyIntent);
+                        }
+                        finish();
                     }
-                    finish();
                 }
+                Toast.makeText(SearchActivity.this, "No Data available", Toast.LENGTH_SHORT).show();
+
             }
 
         });
