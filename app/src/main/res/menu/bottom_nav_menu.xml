@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_stock"
-        android:icon="@drawable/ic_baseline_stock_24dp"
+        android:icon="@drawable/ic_baseline_stock"
         android:title="@string/navigation_stock" />
 
     <item
         android:id="@+id/navigation_compare"
-        android:icon="@drawable/ic_baseline_compare_24"
+        android:icon="@drawable/ic_baseline_compare"
         android:title="@string/navigation_compare" />
 
     <item
         android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_basline_settings_24dp"
+        android:icon="@drawable/ic_basline_settings"
         android:title="@string/navigation_settings" />
 
 </menu>

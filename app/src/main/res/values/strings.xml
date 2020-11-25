@@ -44,5 +44,6 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="stock_refresh">Refresh</string>
+    <string name="stock_share">Share</string>
 
 </resources>
