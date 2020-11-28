@@ -49,6 +49,10 @@ class Repository {
 
     private Thread thread;
 
+    /**
+     * Creates a Repository object
+     * @param application context from app
+     */
     Repository(Application application) {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         mStockDao = db.stockDao();
