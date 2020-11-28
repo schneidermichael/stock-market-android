@@ -1,4 +1,4 @@
-package at.schn142.stockmarket.activity;
+package at.schn142.stockmarket.ui;
 
 import android.os.Bundle;
 
@@ -21,16 +21,22 @@ import java.util.List;
 
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.StockRange;
-import at.schn142.stockmarket.StockViewModel;
+import at.schn142.stockmarket.ViewModel;
 
-public class StockActivity extends AppCompatActivity {
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+public class StockDetailActivity extends AppCompatActivity {
 
     public static final String SYMBOL = "at.schn142.stockmarket.ui.home.SYMBOL";
     public static final String COMPANYNAME = "at.schn142.stockmarket.ui.home.COMPANYNAME";
 
     public static final String TAG = "StockActivity";
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
 
     private MaterialButtonToggleGroup toggleGroup;
     private MaterialButton buttonFiveDay;
@@ -59,7 +65,7 @@ public class StockActivity extends AppCompatActivity {
 
         setTitle(companyName);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         toggleGroup = findViewById(R.id.toggle_button_group);
         buttonFiveDay = findViewById(R.id.button_five_day);

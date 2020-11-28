@@ -5,30 +5,37 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import at.schn142.stockmarket.dao.StockDao;
 import at.schn142.stockmarket.model.Stock;
 
+/**
+ * Room database
+ * Supports only following data types: TEXT, INTEGER, BLOB, REAL and UNDEFINED.
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 @Database(entities = {Stock.class}, version = 5, exportSchema = false)
-public abstract class StockRoomDatabase extends RoomDatabase {
+public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
     public abstract StockDao stockDao();
 
-    private static volatile StockRoomDatabase INSTANCE;
+    private static volatile RoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static StockRoomDatabase getDatabase(final Context context) {
+    static RoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (StockRoomDatabase.class) {
+            synchronized (RoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            StockRoomDatabase.class, "stock_database")
+                            RoomDatabase.class, "stock_database")
                             .addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
                             .build();
@@ -38,7 +45,7 @@ public abstract class StockRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+    private static androidx.room.RoomDatabase.Callback sRoomDatabaseCallback = new androidx.room.RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);

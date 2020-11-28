@@ -10,11 +10,17 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.StockViewModel;
+import at.schn142.stockmarket.ViewModel;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
 
     AlertDialog.Builder builder;
 
@@ -29,7 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
         builder = new AlertDialog.Builder(getContext());
 
         Preference preference = findPreference("deleteAllStocks");

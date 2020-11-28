@@ -1,4 +1,4 @@
-package at.schn142.stockmarket.activity;
+package at.schn142.stockmarket.ui;
 
 import android.os.Bundle;
 
@@ -21,14 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.StockViewModel;
+import at.schn142.stockmarket.ViewModel;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class CompareActivity extends AppCompatActivity {
 
     public static final String SYMBOLONE = "at.schn142.stockmarket.ui.compare.SYMBOLONE";
     public static final String SYMBOLTWO = "at.schn142.stockmarket.ui.compare.SYMBOLTWO";
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,7 @@ public class CompareActivity extends AppCompatActivity {
 
         setTitle(symbolOne+" vs. "+symbolTwo);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view_compare);
         anyChartView.setProgressBar(findViewById(R.id.progress_bar_compare));

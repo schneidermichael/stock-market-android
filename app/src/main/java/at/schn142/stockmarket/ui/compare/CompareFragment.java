@@ -20,11 +20,17 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.StockViewModel;
-import at.schn142.stockmarket.activity.CompareActivity;
+import at.schn142.stockmarket.ViewModel;
+import at.schn142.stockmarket.ui.CompareActivity;
 import at.schn142.stockmarket.adapter.CompareAdapter;
 import at.schn142.stockmarket.model.Stock;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class CompareFragment extends Fragment {
 
     public static final String SYMBOLONE = "at.schn142.stockmarket.ui.compare.SYMBOLONE";
@@ -32,7 +38,7 @@ public class CompareFragment extends Fragment {
     
     public static final String TAG = "MapFragment";
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
     private RecyclerView recyclerView;
     private CompareAdapter adapter;
     private MaterialButton btnSelected;
@@ -50,7 +56,7 @@ public class CompareFragment extends Fragment {
         adapter = new CompareAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override

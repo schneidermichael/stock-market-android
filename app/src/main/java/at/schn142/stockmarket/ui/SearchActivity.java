@@ -1,4 +1,4 @@
-package at.schn142.stockmarket.activity;
+package at.schn142.stockmarket.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,20 +21,26 @@ import java.util.List;
 
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
-import at.schn142.stockmarket.StockViewModel;
-import at.schn142.stockmarket.adapter.StockSearchAdapter;
+import at.schn142.stockmarket.ViewModel;
+import at.schn142.stockmarket.adapter.SearchAdapter;
 
 import static android.widget.LinearLayout.VERTICAL;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "SearchActivity";
     public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
     private RecyclerView searchRecyclerView;
     private DividerItemDecoration searchItemDecor;
-    private StockSearchAdapter searchAdapter;
+    private SearchAdapter searchAdapter;
     private RecyclerView.LayoutManager searchlayoutManager;
     private Handler handler = new Handler();
 
@@ -46,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
         searchRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
         searchlayoutManager = new LinearLayoutManager(this);
 
-        searchAdapter = new StockSearchAdapter(this);
+        searchAdapter = new SearchAdapter(this);
 
         searchRecyclerView.setLayoutManager(searchlayoutManager);
 
@@ -55,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
 
         searchRecyclerView.setAdapter(searchAdapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         mStockViewModel.getSearchStock().observe(this, new Observer<List<Stock>>() {
             @Override
@@ -65,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        searchAdapter.setOnItemClickListener(new StockSearchAdapter.ClickListener() {
+        searchAdapter.setOnItemClickListener(new SearchAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) throws InterruptedException {
                 Stock stock = searchAdapter.getStockAtPosition(position);

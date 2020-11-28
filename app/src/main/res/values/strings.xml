@@ -1,4 +1,12 @@
 <resources>
+
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
     <string name="app_name">Stocks</string>
     <string name="element_symbol">Symbol</string>
     <string name="element_company_name">Company Name</string>

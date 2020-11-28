@@ -1,7 +1,6 @@
 package at.schn142.stockmarket.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,13 @@ import java.util.List;
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
-public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.ViewHolder> {
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
     public static final String TAG = "StockSearchAdapter";
 
@@ -57,18 +62,18 @@ public class StockSearchAdapter extends RecyclerView.Adapter<StockSearchAdapter.
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        StockSearchAdapter.clickListener = clickListener;
+        SearchAdapter.clickListener = clickListener;
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StockSearchAdapter(Context context) {
+    public SearchAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                   int viewType) {
+    public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                       int viewType) {
         // create a new view
         View itemView = mInflater.inflate(R.layout.search_card_view, parent, false);
         return new ViewHolder(itemView);

@@ -1,4 +1,4 @@
-package at.schn142.stockmarket;
+package at.schn142.stockmarket.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -12,6 +12,12 @@ import java.util.List;
 
 import at.schn142.stockmarket.model.Stock;
 
+/**
+ * DAO for Stock
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 @Dao
 public interface StockDao {
 

@@ -17,6 +17,12 @@ import java.util.List;
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHolder> {
 
     private final LayoutInflater mInflater;

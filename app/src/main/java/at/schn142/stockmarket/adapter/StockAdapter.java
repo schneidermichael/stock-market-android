@@ -24,12 +24,18 @@ import at.schn142.stockmarket.model.Stock;
 
 import static android.graphics.Color.rgb;
 
-public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.ViewHolder> {
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> {
 
     public static final String TAG = "StockListAdapter";
 
     private static DecimalFormat myFormatter = new DecimalFormat("0.00");
-    private static StockListAdapter.ClickListener clickListener;
+    private static StockAdapter.ClickListener clickListener;
     private final LayoutInflater mInflater;
     private List<Stock> mStocks;
 
@@ -67,15 +73,15 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        StockListAdapter.clickListener = clickListener;
+        StockAdapter.clickListener = clickListener;
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StockListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public StockAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StockListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StockAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = mInflater.inflate(R.layout.stock_card_view, parent, false);
         return new ViewHolder(itemView);

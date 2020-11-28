@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,24 +26,30 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
-import at.schn142.stockmarket.activity.StockActivity;
+import at.schn142.stockmarket.ui.StockDetailActivity;
 import at.schn142.stockmarket.model.Stock;
-import at.schn142.stockmarket.StockViewModel;
-import at.schn142.stockmarket.activity.SearchActivity;
-import at.schn142.stockmarket.adapter.StockListAdapter;
+import at.schn142.stockmarket.ViewModel;
+import at.schn142.stockmarket.ui.SearchActivity;
+import at.schn142.stockmarket.adapter.StockAdapter;
 
 import static android.widget.LinearLayout.VERTICAL;
 
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
 public class StockFragment extends Fragment {
 
     public static final int NEW_STOCK_ACTIVITY_REQUEST_CODE = 1;
     public static final String SYMBOL = "at.schn142.stockmarket.ui.home.SYMBOL";
     public static final String COMPANYNAME = "at.schn142.stockmarket.ui.home.COMPANYNAME";
 
-    private StockViewModel mStockViewModel;
+    private ViewModel mStockViewModel;
     private RecyclerView stockRecyclerView;
     private DividerItemDecoration stockItemDecor;
-    private StockListAdapter stockListAdapter;
+    private StockAdapter stockListAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,7 +67,7 @@ public class StockFragment extends Fragment {
         stockRecyclerView =  (RecyclerView) root.findViewById(R.id.stock_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
 
-        stockListAdapter = new StockListAdapter(getActivity());
+        stockListAdapter = new StockAdapter(getActivity());
 
         stockRecyclerView.setLayoutManager(layoutManager);
 
@@ -71,7 +76,7 @@ public class StockFragment extends Fragment {
 
         stockRecyclerView.setAdapter(stockListAdapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override
@@ -84,12 +89,12 @@ public class StockFragment extends Fragment {
             }
         });
 
-        stockListAdapter.setOnItemClickListener(new StockListAdapter.ClickListener(){
+        stockListAdapter.setOnItemClickListener(new StockAdapter.ClickListener(){
 
             @Override
             public void onItemClick(int position, View v) {
 
-                Intent intent = new Intent (v.getContext(), StockActivity.class);
+                Intent intent = new Intent (v.getContext(), StockDetailActivity.class);
                 Stock stock = stockListAdapter.getStockAtPosition(position);
                 intent.putExtra(SYMBOL,stock.getSymbol());
                 intent.putExtra(COMPANYNAME,stock.getCompanyName());

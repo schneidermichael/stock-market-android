@@ -1,0 +1,82 @@
+package at.schn142.stockmarket;
+
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
+import com.anychart.chart.common.dataentry.DataEntry;
+
+import java.util.List;
+
+import at.schn142.stockmarket.model.Stock;
+import at.schn142.stockmarket.model.StockRange;
+
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+public class ViewModel extends AndroidViewModel {
+
+    private Repository mRepository;
+
+    private LiveData<List<Stock>> mSearchStocks;
+
+    private LiveData<List<Stock>> mAllStocks;
+
+    private LiveData<List<DataEntry>> mData;
+
+    public ViewModel(Application application) {
+        super(application);
+        mRepository = new Repository(application);
+        mAllStocks = mRepository.getAllStocks();
+        mSearchStocks = mRepository.getSearchStocks();
+        mData = mRepository.getData();
+    }
+
+    public LiveData<List<Stock>> getSearchStock() {
+        return mSearchStocks;
+    }
+
+    public LiveData<List<Stock>> getAllStocks() {
+        return mAllStocks;
+    }
+
+    public void insert(Stock stock) {
+        mRepository.insert(stock);
+    }
+
+    public void delete(Stock stock) {
+        mRepository.delete(stock);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
+    public void search(String searchQuery) {
+        mRepository.searchIexCloud(searchQuery);
+    }
+
+    public Stock searchStock(String symbol) {
+        return mRepository.searchStock(symbol);
+    }
+
+    public void getDataEntryForOHLC(String symbol, StockRange range) {
+        mRepository.getDataEntryForOHLC(symbol, range);
+    }
+
+    public LiveData<List<DataEntry>> getData() {
+        return mData;
+    }
+
+    public List<DataEntry> getLineChartData(String symbolOne, String symbolTwo) {
+        return mRepository.getLineChartData(symbolOne, symbolTwo);
+    }
+
+    public void updateAll() {
+        mRepository.updateAll();
+    }
+}

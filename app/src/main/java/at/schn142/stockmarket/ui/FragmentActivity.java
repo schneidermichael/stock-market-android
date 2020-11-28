@@ -1,4 +1,4 @@
-package at.schn142.stockmarket.activity;
+package at.schn142.stockmarket.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +14,22 @@ import androidx.navigation.ui.NavigationUI;
 
 import at.schn142.stockmarket.R;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+public class FragmentActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "FragmentActivity";
 
     public static final int NEW_STOCK_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_fragment);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_STOCK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Toast.makeText(MainActivity.this,
+            Toast.makeText(FragmentActivity.this,
                     getString(R.string.add_stock_preamble) + " " +data.getStringExtra(SearchActivity.EXTRA_REPLY), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(

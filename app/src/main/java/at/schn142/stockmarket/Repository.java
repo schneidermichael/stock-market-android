@@ -21,12 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import at.schn142.stockmarket.dao.StockDao;
 import at.schn142.stockmarket.model.LineDataEntry;
 import at.schn142.stockmarket.model.StockDataEntry;
 import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.model.StockRange;
 
-class StockRepository {
+/**
+ *
+ *
+ * @author michaelschneider
+ * @version 1.0
+ */
+class Repository {
 
     public static final String TAG = "StockRepository";
 
@@ -42,8 +49,8 @@ class StockRepository {
 
     private Thread thread;
 
-    StockRepository(Application application) {
-        StockRoomDatabase db = StockRoomDatabase.getDatabase(application);
+    Repository(Application application) {
+        RoomDatabase db = RoomDatabase.getDatabase(application);
         mStockDao = db.stockDao();
         mAllStocks = mStockDao.getAlphabetizedStocks();
         mSearchStocks = new MutableLiveData<>();
@@ -63,13 +70,13 @@ class StockRepository {
     }
 
     void insert(Stock stock) {
-        StockRoomDatabase.databaseWriteExecutor.execute(() -> {
+        RoomDatabase.databaseWriteExecutor.execute(() -> {
             mStockDao.insert(stock);
         });
     }
 
     void update(Stock stock) {
-        StockRoomDatabase.databaseWriteExecutor.execute(() -> {
+        RoomDatabase.databaseWriteExecutor.execute(() -> {
             mStockDao.update(stock);
         });
     }
