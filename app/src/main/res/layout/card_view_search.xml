@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/searchCardView"
+    android:id="@+id/search_card_view"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="vertical"
     card_view:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/searchLinearLayout"
+        android:id="@+id/search_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/searchCardTextViewSymbol"
+            android:id="@+id/search_card_text_view_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:text="@string/element_symbol"
+            android:text="@string/text_view_symbol"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -26,12 +26,12 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/searchCardTextViewCompanyName"
+            android:id="@+id/search_card_text_view_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/element_company_name"
+            android:text="@string/text_view_company_name"
             android:textAlignment="textEnd"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />

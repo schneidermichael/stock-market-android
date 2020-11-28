@@ -13,7 +13,7 @@
         android:theme="@style/Theme.StockMarket">
         <activity
             android:name=".ui.FragmentActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_fragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

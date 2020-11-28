@@ -1,42 +1,10 @@
 <resources>
 
-    <!-- -->
-    <!-- -->
-    <!-- -->
-    <!-- -->
-    <!-- -->
-    <!-- -->
-    <!-- -->
+    <!-- AndroidManifest -->
     <string name="app_name">Stocks</string>
-    <string name="element_symbol">Symbol</string>
-    <string name="element_company_name">Company Name</string>
-    <string name="element_latest_price">Latest Price</string>
-    <string name="element_change_percent">Change Percent</string>
-    <string name="search_title">Search Title</string>
-    <string name="search_hint">Search</string>
-    <string name="add_stock">Add Stock</string>
-    <string name="empty_not_saved">Empty Stock</string>
-    <string name="add_stock_preamble">Add Stock</string>
-    <string name="clear_all_stocks">Clear All Stocks</string>
-    <string name="action_stock">Stock</string>
-    <string name="action_map">Map</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
 
-
-    <!-- Settings -->
-    <string name="preference_delete_all">Delete All Stocks</string>
-    <string name="pref_sort">Sortierung</string>
-
-    <!-- Fragments -->
-    <string name="navigation_stock">Stocks</string>
-    <string name="navigation_compare">Compare</string>
-    <string name="navigation_settings">Settings</string>
-
-    <!-- SettingsFragment -->
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
-
+    <!-- activity_stock_detail -->
     <string name="button_five_year">5Y</string>
     <string name="button_two_year">2Y</string>
     <string name="button_one_year">1Y</string>
@@ -44,14 +12,45 @@
     <string name="button_three_month">3M</string>
     <string name="button_one_month">1M</string>
     <string name="button_five_day">1W</string>
-    <string name="buttonComapre">Compare Stocks</string>
     <string name="title_activity_compare">CompareActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="stock_refresh">Refresh</string>
-    <string name="stock_share">Share</string>
+
+    <!-- fragment_compare -->
+    <string name="button_compare">Compare Stocks</string>
+
+    <!-- fragment_stock -->
+    <string name="add_stock">Add Stock</string>
+
+    <!-- FragmentActivity-->
+    <string name="empty_not_saved">Empty Stock</string>
+    <string name="add_stock_preamble">Add Stock</string>
+
+    <!-- card_view_search / card_view_stock -->
+    <string name="text_view_symbol">Symbol</string>
+    <string name="text_view_company_name">Company Name</string>
+    <string name="text_view_latest_price">Latest Price</string>
+    <string name="text_view_change_percent">Change Percent</string>
+
+    <!-- search_menu -->
+    <string name="search_title">Search Title</string>
+
+    <!-- navigation / bottom_menu -->
+    <string name="navigation_stock">Stocks</string>
+    <string name="navigation_compare">Compare</string>
+    <string name="navigation_settings">Settings</string>
+
+    <!-- stock_menu -->
+    <string name="refresh">Refresh</string>
+
+    <!-- searchable -->
+    <string name="search_hint">Search</string>
+
+    <!-- Settings -->
+    <string name="preference_delete_all">Delete All Stocks</string>
+    <string name="pref_sort">Sortierung</string>
+
+    <!-- SettingsFragment -->
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
 
 </resources>

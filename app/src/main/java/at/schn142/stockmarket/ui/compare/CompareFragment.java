@@ -26,7 +26,8 @@ import at.schn142.stockmarket.adapter.CompareAdapter;
 import at.schn142.stockmarket.model.Stock;
 
 /**
- *
+ * This class represents CompareFragment
+ * List of stocks to compare
  *
  * @author michaelschneider
  * @version 1.0
@@ -35,30 +36,28 @@ public class CompareFragment extends Fragment {
 
     public static final String SYMBOLONE = "at.schn142.stockmarket.ui.compare.SYMBOLONE";
     public static final String SYMBOLTWO = "at.schn142.stockmarket.ui.compare.SYMBOLTWO";
-    
-    public static final String TAG = "MapFragment";
 
-    private ViewModel mStockViewModel;
+    private ViewModel mViewModel;
     private RecyclerView recyclerView;
     private CompareAdapter adapter;
-    private MaterialButton btnSelected;
+    private MaterialButton button;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_compare, container, false);
 
-        btnSelected = (MaterialButton) root.findViewById(R.id.buttonCompare);
-        recyclerView = (RecyclerView) root.findViewById(R.id.compare_recycler_view);
+        button = (MaterialButton) root.findViewById(R.id.button_compare);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_compare);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         adapter = new CompareAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
+        mViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
 
@@ -66,7 +65,7 @@ public class CompareFragment extends Fragment {
             }
         });
 
-        btnSelected.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {

@@ -13,7 +13,7 @@ import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.model.StockRange;
 
 /**
- *
+ * This class represents ViewModel
  *
  * @author michaelschneider
  * @version 1.0
@@ -36,14 +36,6 @@ public class ViewModel extends AndroidViewModel {
         mData = mRepository.getData();
     }
 
-    public LiveData<List<Stock>> getSearchStock() {
-        return mSearchStocks;
-    }
-
-    public LiveData<List<Stock>> getAllStocks() {
-        return mAllStocks;
-    }
-
     public void insert(Stock stock) {
         mRepository.insert(stock);
     }
@@ -56,16 +48,29 @@ public class ViewModel extends AndroidViewModel {
         mRepository.deleteAll();
     }
 
+    public void updateAll() {
+        mRepository.updateAll();
+    }
+
     public void search(String searchQuery) {
-        mRepository.searchIexCloud(searchQuery);
+        mRepository.search(searchQuery);
+    }
+
+
+    public LiveData<List<Stock>> getSearchStock() {
+        return mSearchStocks;
+    }
+
+    public LiveData<List<Stock>> getAllStocks() {
+        return mAllStocks;
     }
 
     public Stock searchStock(String symbol) {
         return mRepository.searchStock(symbol);
     }
 
-    public void getDataEntryForOHLC(String symbol, StockRange range) {
-        mRepository.getDataEntryForOHLC(symbol, range);
+    public void getOLHCDataEntry(String symbol, StockRange range) {
+        mRepository.getOLHCDataEntry(symbol, range);
     }
 
     public LiveData<List<DataEntry>> getData() {
@@ -76,7 +81,4 @@ public class ViewModel extends AndroidViewModel {
         return mRepository.getLineChartData(symbolOne, symbolTwo);
     }
 
-    public void updateAll() {
-        mRepository.updateAll();
-    }
 }

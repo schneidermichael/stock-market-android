@@ -24,7 +24,8 @@ import at.schn142.stockmarket.model.StockRange;
 import at.schn142.stockmarket.ViewModel;
 
 /**
- *
+ * This class represents StockDetailActivity
+ * Show the OLHC Chart from the stock
  *
  * @author michaelschneider
  * @version 1.0
@@ -34,9 +35,7 @@ public class StockDetailActivity extends AppCompatActivity {
     public static final String SYMBOL = "at.schn142.stockmarket.ui.home.SYMBOL";
     public static final String COMPANYNAME = "at.schn142.stockmarket.ui.home.COMPANYNAME";
 
-    public static final String TAG = "StockActivity";
-
-    private ViewModel mStockViewModel;
+    private ViewModel mViewModel;
 
     private MaterialButtonToggleGroup toggleGroup;
     private MaterialButton buttonFiveDay;
@@ -57,7 +56,7 @@ public class StockDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock);
+        setContentView(R.layout.activity_stock_detail);
 
         Bundle extras = getIntent().getExtras();
         String symbol = extras.getString(SYMBOL);
@@ -65,7 +64,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
         setTitle(companyName);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         toggleGroup = findViewById(R.id.toggle_button_group);
         buttonFiveDay = findViewById(R.id.button_five_day);
@@ -78,7 +77,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
         range = StockRange.fiveDay;
 
-        mStockViewModel.getDataEntryForOHLC(symbol, range);
+        mViewModel.getOLHCDataEntry(symbol, range);
 
         toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
 
@@ -113,7 +112,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
                     range = StockRange.fiveYear;
                 }
-                mStockViewModel.getDataEntryForOHLC(symbol, range);
+                mViewModel.getOLHCDataEntry(symbol, range);
             }
         });
 
@@ -122,7 +121,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
         table = Table.instantiate("x");
 
-        mStockViewModel.getData().observe(this, new Observer<List<DataEntry>>() {
+        mViewModel.getData().observe(this, new Observer<List<DataEntry>>() {
             @Override
             public void onChanged(List<DataEntry> dataEntries) {
                 //Funktioniert leider nicht rückwärts

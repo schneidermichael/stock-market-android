@@ -27,7 +27,8 @@ import at.schn142.stockmarket.adapter.SearchAdapter;
 import static android.widget.LinearLayout.VERTICAL;
 
 /**
- *
+ * This class represents SearchActivity
+ * Show all searchable stocks
  *
  * @author michaelschneider
  * @version 1.0
@@ -37,11 +38,11 @@ public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
     public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
-    private ViewModel mStockViewModel;
-    private RecyclerView searchRecyclerView;
-    private DividerItemDecoration searchItemDecor;
-    private SearchAdapter searchAdapter;
-    private RecyclerView.LayoutManager searchlayoutManager;
+    private ViewModel mViewModel;
+    private RecyclerView recyclerView;
+    private DividerItemDecoration dividerItemDecoration;
+    private SearchAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
     private Handler handler = new Handler();
 
     @Override
@@ -49,35 +50,35 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        searchRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
-        searchlayoutManager = new LinearLayoutManager(this);
+        recyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
+        layoutManager = new LinearLayoutManager(this);
 
-        searchAdapter = new SearchAdapter(this);
+        adapter = new SearchAdapter(this);
 
-        searchRecyclerView.setLayoutManager(searchlayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        searchItemDecor = new DividerItemDecoration(this, VERTICAL);
-        searchRecyclerView.addItemDecoration(searchItemDecor);
+        dividerItemDecoration = new DividerItemDecoration(this, VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        searchRecyclerView.setAdapter(searchAdapter);
+        recyclerView.setAdapter(adapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        mStockViewModel.getSearchStock().observe(this, new Observer<List<Stock>>() {
+        mViewModel.getSearchStock().observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
 
-                searchAdapter.setStocks(stocks);
+                adapter.setStocks(stocks);
             }
         });
 
-        searchAdapter.setOnItemClickListener(new SearchAdapter.ClickListener() {
+        adapter.setOnItemClickListener(new SearchAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) throws InterruptedException {
-                Stock stock = searchAdapter.getStockAtPosition(position);
+                Stock stock = adapter.getStockAtPosition(position);
                 if (!stock.getSymbol().equalsIgnoreCase("")) {
 
-                    Stock newStock = mStockViewModel.searchStock(stock.getSymbol());
+                    Stock newStock = mViewModel.searchStock(stock.getSymbol());
                     if (newStock != null) {
                         Log.d(TAG, stock.getCompanyName());
                         Intent replyIntent = new Intent();
@@ -85,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
                             setResult(RESULT_CANCELED, replyIntent);
                         } else {
 
-                            mStockViewModel.insert(newStock);
+                            mViewModel.insert(newStock);
                             replyIntent.putExtra(EXTRA_REPLY, stock.getCompanyName());
                             setResult(RESULT_OK, replyIntent);
                         }
@@ -122,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mStockViewModel.search(query);
+                        mViewModel.search(query);
                     }
                 }, 750);
                 return true;

@@ -35,7 +35,8 @@ import at.schn142.stockmarket.adapter.StockAdapter;
 import static android.widget.LinearLayout.VERTICAL;
 
 /**
- *
+ * This class represents StockFragment
+ * Show your favorite stocks
  *
  * @author michaelschneider
  * @version 1.0
@@ -46,10 +47,10 @@ public class StockFragment extends Fragment {
     public static final String SYMBOL = "at.schn142.stockmarket.ui.home.SYMBOL";
     public static final String COMPANYNAME = "at.schn142.stockmarket.ui.home.COMPANYNAME";
 
-    private ViewModel mStockViewModel;
-    private RecyclerView stockRecyclerView;
-    private DividerItemDecoration stockItemDecor;
-    private StockAdapter stockListAdapter;
+    private ViewModel mViewModel;
+    private RecyclerView recyclerView;
+    private DividerItemDecoration dividerItemDecoration;
+    private StockAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,39 +64,39 @@ public class StockFragment extends Fragment {
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String switchPref = sharedPref.getString("pref_sort","asc");
-        
-        stockRecyclerView =  (RecyclerView) root.findViewById(R.id.stock_recycler_view);
+
+        recyclerView =  (RecyclerView) root.findViewById(R.id.recycler_view_stock);
         layoutManager = new LinearLayoutManager(getActivity());
 
-        stockListAdapter = new StockAdapter(getActivity());
+        adapter = new StockAdapter(getActivity());
 
-        stockRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        stockItemDecor = new DividerItemDecoration(getActivity(), VERTICAL);
-        stockRecyclerView.addItemDecoration(stockItemDecor);
+        dividerItemDecoration = new DividerItemDecoration(getActivity(), VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        stockRecyclerView.setAdapter(stockListAdapter);
+        recyclerView.setAdapter(adapter);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        mStockViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
+        mViewModel.getAllStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
             @Override
             public void onChanged(List<Stock> stocks) {
 
                 if (switchPref.equals("asc")){
-                    stockListAdapter.sortStocksAsc(stocks);
+                    adapter.sortStocksAsc(stocks);
                 }else
-                    stockListAdapter.sortStocksDesc(stocks);
+                    adapter.sortStocksDesc(stocks);
             }
         });
 
-        stockListAdapter.setOnItemClickListener(new StockAdapter.ClickListener(){
+        adapter.setOnItemClickListener(new StockAdapter.ClickListener(){
 
             @Override
             public void onItemClick(int position, View v) {
 
                 Intent intent = new Intent (v.getContext(), StockDetailActivity.class);
-                Stock stock = stockListAdapter.getStockAtPosition(position);
+                Stock stock = adapter.getStockAtPosition(position);
                 intent.putExtra(SYMBOL,stock.getSymbol());
                 intent.putExtra(COMPANYNAME,stock.getCompanyName());
                 v.getContext().startActivity(intent);
@@ -128,16 +129,16 @@ public class StockFragment extends Fragment {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Stock stock = stockListAdapter.getStockAtPosition(position);
+                        Stock stock = adapter.getStockAtPosition(position);
                         Toast.makeText(getActivity(), "Deleting " +
                                 stock.getCompanyName(), Toast.LENGTH_LONG).show();
 
 
-                        mStockViewModel.delete(stock);
+                        mViewModel.delete(stock);
                     }
                 });
 
-        helper.attachToRecyclerView(stockRecyclerView);
+        helper.attachToRecyclerView(recyclerView);
 
         return root;
     }
@@ -150,7 +151,7 @@ public class StockFragment extends Fragment {
         if (id == R.id.refresh) {
             // Add a toast just for confirmation
 
-            mStockViewModel.updateAll();
+            mViewModel.updateAll();
             Toast.makeText(getActivity(), "Update all stocks", Toast.LENGTH_SHORT).show();
 
         }

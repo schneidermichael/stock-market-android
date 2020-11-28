@@ -15,14 +15,13 @@ import androidx.navigation.ui.NavigationUI;
 import at.schn142.stockmarket.R;
 
 /**
- *
+ * This class represents FragmentActivity
+ * Activity for the Fragments(stock,compare,settings)
  *
  * @author michaelschneider
  * @version 1.0
  */
 public class FragmentActivity extends AppCompatActivity {
-
-    public static final String TAG = "FragmentActivity";
 
     public static final int NEW_STOCK_ACTIVITY_REQUEST_CODE = 1;
 

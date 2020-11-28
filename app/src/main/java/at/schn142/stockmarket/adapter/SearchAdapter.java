@@ -15,14 +15,12 @@ import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
 /**
- *
+ * This class represents SearchAdapter for the class SearchActivity
  *
  * @author michaelschneider
  * @version 1.0
  */
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
-
-    public static final String TAG = "StockSearchAdapter";
 
     private static ClickListener clickListener;
     private final LayoutInflater mInflater;
@@ -32,11 +30,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         void onItemClick(int position, View v) throws InterruptedException;
     }
 
+    /**
+     * View holder object for each individual element in the list
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public CardView searchCardView;
-        public TextView searchTextCardViewSymbol;
-        public TextView searchTextCardViewCompanyName;
+        public CardView cardView;
+        public TextView textViewSymbol;
+        public TextView textViewCompanyName;
 
         public ViewHolder(View itemView) {
 
@@ -44,9 +45,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             itemView.setOnClickListener(this);
 
-            searchCardView = itemView.findViewById(R.id.searchCardView);
-            searchTextCardViewSymbol = (TextView) itemView.findViewById(R.id.searchCardTextViewSymbol);
-            searchTextCardViewCompanyName = (TextView) itemView.findViewById(R.id.searchCardTextViewCompanyName);
+            cardView = itemView.findViewById(R.id.search_card_view);
+            textViewSymbol = (TextView) itemView.findViewById(R.id.search_card_text_view_symbol);
+            textViewCompanyName = (TextView) itemView.findViewById(R.id.search_card_text_view_company_name);
 
         }
 
@@ -65,47 +66,71 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         SearchAdapter.clickListener = clickListener;
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Create a SearchAdapter object
+     * @param context of current state of the Activity
+     */
     public SearchAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Creates and initializes the ViewHolder and its associated View
+     * @param parent into which the new View will be added after it is bound to an adapter position
+     * @param viewType of the new View
+     * @return a ViewHolder
+     */
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
-        // create a new view
-        View itemView = mInflater.inflate(R.layout.search_card_view, parent, false);
+        View itemView = mInflater.inflate(R.layout.card_view_search, parent, false);
         return new ViewHolder(itemView);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Replace/Update the contents of a View
+     * @param holder whose contents should be updated
+     * @param position of the holder
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         if (mStocks != null) {
             Stock current = mStocks.get(position);
 
-            holder.searchTextCardViewSymbol.setText(current.getSymbol());
-            holder.searchTextCardViewCompanyName.setText(current.getCompanyName());
+            holder.textViewSymbol.setText(current.getSymbol());
+            holder.textViewCompanyName.setText(current.getCompanyName());
 
         } else {
-            // Covers the case of data not being ready yet.
-            holder.searchTextCardViewSymbol.setText("No Word");
-            holder.searchTextCardViewCompanyName.setText("No Word");
+            holder.textViewSymbol.setText("No Word");
+            holder.textViewCompanyName.setText("No Word");
         }
     }
 
+    /**
+     * Set the dataset of the Adapter.
+     * @param stocks containing the data to populate views to be used
+     * by RecyclerView.
+     */
     public void setStocks(List<Stock> stocks) {
         mStocks = stocks;
         notifyDataSetChanged();
     }
 
+    /**
+     * Get the stock from the Recylerview
+     * @param position of the stock in List<Stock>
+     * @return a stock
+     */
     public Stock getStockAtPosition(int position) {
         return mStocks.get(position);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+
+    /**
+     * Get the size of the dataset
+     * @return zero or a positive integer
+     */
     @Override
     public int getItemCount() {
         if (mStocks != null)

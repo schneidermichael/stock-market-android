@@ -13,17 +13,17 @@ import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.ViewModel;
 
 /**
- *
+ * This class represents SettingsFragment
+ * Show the Settings
  *
  * @author michaelschneider
  * @version 1.0
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private ViewModel mStockViewModel;
+    private ViewModel mViewModel;
 
     AlertDialog.Builder builder;
-
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -35,7 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
         builder = new AlertDialog.Builder(getContext());
 
         Preference preference = findPreference("deleteAllStocks");
@@ -48,7 +48,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                mStockViewModel.deleteAll();
+                                mViewModel.deleteAll();
                             }
                         })
                         .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {

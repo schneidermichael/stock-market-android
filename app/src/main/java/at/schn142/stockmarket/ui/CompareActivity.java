@@ -24,7 +24,8 @@ import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.ViewModel;
 
 /**
- *
+ * This class represents CompareActivity
+ * Show the difference between two Stocks in a Chart(Type:Line)
  *
  * @author michaelschneider
  * @version 1.0
@@ -34,7 +35,7 @@ public class CompareActivity extends AppCompatActivity {
     public static final String SYMBOLONE = "at.schn142.stockmarket.ui.compare.SYMBOLONE";
     public static final String SYMBOLTWO = "at.schn142.stockmarket.ui.compare.SYMBOLTWO";
 
-    private ViewModel mStockViewModel;
+    private ViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class CompareActivity extends AppCompatActivity {
 
         setTitle(symbolOne+" vs. "+symbolTwo);
 
-        mStockViewModel = new ViewModelProvider(this).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view_compare);
         anyChartView.setProgressBar(findViewById(R.id.progress_bar_compare));
@@ -72,7 +73,7 @@ public class CompareActivity extends AppCompatActivity {
 
         List<DataEntry> seriesData = new ArrayList<>();
 
-        seriesData = mStockViewModel.getLineChartData(symbolOne,symbolOne);
+        seriesData = mViewModel.getLineChartData(symbolOne,symbolOne);
 
         Set set = Set.instantiate();
         set.data(seriesData);

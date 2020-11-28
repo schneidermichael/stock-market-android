@@ -18,16 +18,20 @@ import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
 /**
- *
+ * This class represents CompareAdapter for the class CompareFragment
  *
  * @author michaelschneider
  * @version 1.0
  */
 public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHolder> {
 
+
     private final LayoutInflater mInflater;
     private List<Stock> mStocks;
 
+    /**
+     * View holder object for each individual element in the list
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView textView;
@@ -36,61 +40,86 @@ public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView = itemView.findViewById(R.id.textView);
-            imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.text_view);
+            imageView = itemView.findViewById(R.id.image_view);
 
         }
 
     }
 
+    /**
+     * Create a CompareAdapter object
+     * @param context of current state of the Activity
+     */
     public CompareAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
+
+    /**
+     * Creates and initializes the ViewHolder and its associated View
+     * @param parent into which the new View will be added after it is bound to an adapter position
+     * @param viewType of the new View
+     * @return a ViewHolder
+     */
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = mInflater.inflate(R.layout.compare_card_view, viewGroup, false);
+        View itemView = mInflater.inflate(R.layout.card_view_compare, parent, false);
         return new ViewHolder(itemView);
     }
 
+    /**
+     * Replace/Update the contents of a View
+     * @param holder whose contents should be updated
+     * @param position of the holder
+     */
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         if(mStocks != null){
             Stock current = mStocks.get(position);
 
-            viewHolder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
-            viewHolder.textView.setText(current.getCompanyName());
+            holder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
+            holder.textView.setText(current.getCompanyName());
 
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     if (getSelected().size() < 2) {
                         current.setChecked(!current.isChecked());
-                        viewHolder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
+                        holder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
                     } else if (current.isChecked() && getSelected().size() == 2) {
                         current.setChecked(!current.isChecked());
-                        viewHolder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
+                        holder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
                     }
 
                 }
             });
 
         }else{
-            viewHolder.textView.setText("No Word");
-            viewHolder.imageView.setVisibility(View.GONE);
+            holder.textView.setText("No Word");
+            holder.imageView.setVisibility(View.GONE);
         }
 
     }
 
+    /**
+     * Set the dataset of the Adapter.
+     * @param stocks containing the data to populate views to be used
+     * by RecyclerView.
+     */
     public void setStocks(List<Stock> stocks) {
         this.mStocks = stocks;
         notifyDataSetChanged();
     }
 
+    /**
+     * Get selected stocks from Recylerview
+     * @return a List<Stock>
+     */
     public List<Stock> getSelected() {
         List<Stock> selected = new ArrayList<>();
         for (int i = 0; i < mStocks.size(); i++) {
@@ -101,7 +130,10 @@ public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHold
         return selected;
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Get the size of the dataset
+     * @return zero or a positive integer
+     */
     @Override
     public int getItemCount() {
         if (mStocks != null)

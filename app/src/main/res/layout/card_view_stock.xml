@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/listStockCardView"
+    android:id="@+id/stock_card_view"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="vertical"
     card_view:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/listStockLinearLayout"
+        android:id="@+id/stock_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/listStockCardTextViewSymbol"
+            android:id="@+id/stock_card_text_view_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="@string/element_symbol"
+            android:text="@string/text_view_symbol"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -28,23 +27,23 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/listStockCardTextViewCompanyName"
+            android:id="@+id/stock_card_text_view_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/element_company_name"
+            android:text="@string/text_view_company_name"
             android:textAlignment="textStart"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/listStockCardTextViewLatestPrice"
+            android:id="@+id/stock_card_text_view_latest_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="@string/element_latest_price"
+            android:text="@string/text_view_latest_price"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -53,13 +52,13 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/listStockCardTextViewChangePercent"
+            android:id="@+id/stock_card_text_view_change_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:padding="3dp"
-            android:text="@string/element_change_percent"
+            android:text="@string/text_view_change_percent"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textStyle="bold"
