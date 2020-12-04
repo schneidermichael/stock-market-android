@@ -93,16 +93,30 @@ public class StockFragment extends Fragment {
         adapter.setOnItemClickListener(new StockAdapter.ClickListener(){
 
             @Override
-            public void onItemClick(int position, View v) {
+            public void onClick(View view, int position) {
 
-                Intent intent = new Intent (v.getContext(), StockDetailActivity.class);
+                Intent intent = new Intent (view.getContext(), StockDetailActivity.class);
                 Stock stock = adapter.getStockAtPosition(position);
                 intent.putExtra(SYMBOL,stock.getSymbol());
                 intent.putExtra(COMPANYNAME,stock.getCompanyName());
-                v.getContext().startActivity(intent);
+                view.getContext().startActivity(intent);
             }
-        });
 
+            @Override
+            public void onLongClick(View view, int position) {
+                Stock stock = adapter.getStockAtPosition(position);
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "https://finance.yahoo.com/quote/"+stock.getSymbol());
+                sendIntent.setType("text/plain");
+
+                //sendIntent.setPackage("com.whatsapp");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+
+        });
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

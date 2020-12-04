@@ -38,13 +38,14 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     private List<Stock> mStocks;
 
     public interface ClickListener {
-        void onItemClick(int position, View v);
+        void onClick(View view, int position);
+        void onLongClick(View view, int position);
     }
 
     /**
      * View holder object for each individual element in the list
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         private CardView cardView;
         private TextView textViewSymbol;
@@ -57,6 +58,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             super(itemView);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
             cardView = itemView.findViewById(R.id.stock_card_view);
             textViewSymbol = (TextView) itemView.findViewById(R.id.stock_card_text_view_symbol);
@@ -69,13 +71,22 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(getAdapterPosition(), view);
+            clickListener.onClick(view, getAdapterPosition());
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            clickListener.onLongClick(view, getAdapterPosition());
+            return true;
+        }
+
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
         StockAdapter.clickListener = clickListener;
     }
+
+
 
     /**
      * Create a StockAdapter object

@@ -106,6 +106,8 @@ public class SearchActivity extends AppCompatActivity {
         inflater.inflate(R.menu.search_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setIconified(false);
+        
         searchView.setQueryHint("Type a stocks symbol");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
