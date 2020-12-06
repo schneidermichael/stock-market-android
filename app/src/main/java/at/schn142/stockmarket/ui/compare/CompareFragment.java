@@ -1,6 +1,9 @@
 package at.schn142.stockmarket.ui.compare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +69,8 @@ public class CompareFragment extends Fragment {
             }
         });
 
+        if(isOnline()){
+
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -88,7 +93,20 @@ public class CompareFragment extends Fragment {
             }
         });
 
+        }else {
+            //TODO
+            Toast.makeText(getActivity(), "No Internet Connection - Cannot compare two stocks", Toast.LENGTH_LONG).show();
+        }
+
         return root;
+    }
+
+    //Code from Manage network usage
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

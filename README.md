@@ -15,6 +15,7 @@ The following guides illustrate how to use some features concretely:
 * [Android RecyclerView with Single and Multiple Selection](https://droidbyme.medium.com/android-recyclerview-with-single-and-multiple-selection-5d50c0c4c739)
 * [Sharing a file](https://developer.android.com/training/secure-file-sharing/share-file)
 * [Support different languages and cultures](https://developer.android.com/training/basics/supporting-devices/languages)
+* [Manage network usage](https://developer.android.com/training/basics/network-ops/managing)
 
 ### API
 

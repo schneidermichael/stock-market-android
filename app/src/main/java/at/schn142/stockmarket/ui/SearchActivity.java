@@ -1,6 +1,10 @@
 package at.schn142.stockmarket.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,7 +39,7 @@ import static android.widget.LinearLayout.VERTICAL;
  */
 public class SearchActivity extends AppCompatActivity {
 
-    public static final String TAG = "SearchActivity";
+    public static final String TAG = SearchActivity.class.getName();
     public static final String EXTRA_REPLY = "at.schn142.stockmarket.activity.REPLY";
 
     private ViewModel mViewModel;
@@ -132,4 +136,5 @@ public class SearchActivity extends AppCompatActivity {
         });
         return true;
     }
+
 }

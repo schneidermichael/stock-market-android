@@ -1,7 +1,10 @@
 package at.schn142.stockmarket.ui.stock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -116,7 +119,12 @@ public class StockFragment extends Fragment {
 
         });
 
+
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
+
+        if (isOnline()){
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +134,12 @@ public class StockFragment extends Fragment {
             }
         });
 
+        }
+        else {
+            setHasOptionsMenu(false);
+            //TODO
+            Toast.makeText(getActivity(), "No Internet Connection - Cannot add a stock", Toast.LENGTH_LONG).show();
+        }
 
         ItemTouchHelper helper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0,
@@ -175,6 +189,14 @@ public class StockFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.stock_menu, menu);
         super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    //Code from Manage network usage
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }
