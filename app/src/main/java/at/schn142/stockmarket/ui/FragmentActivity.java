@@ -50,7 +50,7 @@ public class FragmentActivity extends AppCompatActivity {
         } else {
             Toast.makeText(
                     getApplicationContext(),
-                    R.string.empty_not_saved,
+                    R.string.no_data,
                     Toast.LENGTH_LONG).show();
         }
     }

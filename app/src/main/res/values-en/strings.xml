@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- AndroidManifest -->
@@ -15,7 +16,7 @@
     <string name="title_activity_compare">CompareActivity</string>
 
     <!-- fragment_compare -->
-    <string name="button_compare">Aktien vergleichen</string>
+    <string name="button_compare">Compare Stocks</string>
 
     <!-- fragment_stock -->
     <string name="add_stock">Add Stock</string>
@@ -33,9 +34,9 @@
     <string name="search_title">Search Title</string>
 
     <!-- navigation / bottom_menu -->
-    <string name="navigation_stock">Aktien</string>
-    <string name="navigation_compare">Vergleich</string>
-    <string name="navigation_settings">Einstellungen</string>
+    <string name="navigation_stock">Stocks</string>
+    <string name="navigation_compare">Compare</string>
+    <string name="navigation_settings">Settings</string>
 
     <!-- stock_menu -->
     <string name="refresh">Refresh</string>
@@ -44,30 +45,31 @@
     <string name="search_hint">Search</string>
 
     <!-- Settings -->
-    <string name="preference_delete_all">Alle Aktien löschen</string>
-    <string name="preference_sort">Sortierung der Aktien</string>
-    <string name="ascending">Aufsteigend</string>
-    <string name="descending">Absteigend</string>
+    <string name="preference_delete_all">Delete All Stocks</string>
+    <string name="preference_sort">Sort stocks by</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+
 
     <!-- SettingsFragment -->
-    <string name="dialog_yes">Ja</string>
-    <string name="dialog_no">Nein</string>
-    <string name="dialog_delete_all_message">Möchten Sie wirklich alle Aktien löschen?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
 
     <!-- Repository -->
-    <string name="message_comapre">Vergleichen aktuell nicht möglich</string>
+    <string name="message_comapre">Can\'t compare</string>
 
-    <string name="no_word">Keine Daten</string>
-    <string name="no_data">Keine Daten verfügbar</string>
-    <string name="search_field">Tippen Sie ein Aktien Symbol ein</string>
-    <string name="cartesian_title">5 Jahres Chart</string>
-    <string name="cartesian_axis">Wert in [$]</string>
+    <string name="no_word">No Word</string>
+    <string name="no_data">No Data available</string>
+    <string name="search_field">Type a stocks symbol</string>
+    <string name="cartesian_title">5 Years Chart</string>
+    <string name="cartesian_axis">Value in [$]</string>
     <string name="pref_sort">pref_sort</string>
     <string name="asc">asc</string>
     <string name="deleting">Deleting </string>
-    <string name="update_all">Alle Aktien aktualisiert</string>
+    <string name="update_all">Update all stocks</string>
     <string name="delete_all">deleteAllStocks</string>
-    <string name="no_selection">Keine Aktien ausgewählt</string>
-    <string name="one_selection">Nur eine Aktie ausgewählt</string>
+    <string name="no_selection">No selection</string>
+    <string name="one_selection">Only one selection</string>
 
 </resources>

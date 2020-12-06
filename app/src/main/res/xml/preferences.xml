@@ -4,8 +4,7 @@
 
     <Preference
         app:key="deleteAllStocks"
-        app:title="@string/preference_delete_all"
-        app:summary="Delete all Stocks in the database"/>
+        app:title="@string/preference_delete_all" />
 
     <ListPreference
         android:defaultValue="asc"
