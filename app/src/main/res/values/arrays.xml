@@ -3,9 +3,13 @@
     <string-array name="pref_sort_titles">
         <item>@string/ascending</item>
         <item>@string/descending</item>
+        <item>@string/highest</item>
+        <item>@string/lowest</item>
     </string-array>
     <string-array name="pref_sort_values">
         <item>asc</item>
         <item>desc</item>
+        <item>high</item>
+        <item>low</item>
     </string-array>
 </resources>

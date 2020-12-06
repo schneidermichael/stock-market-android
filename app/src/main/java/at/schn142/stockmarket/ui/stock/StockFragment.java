@@ -88,8 +88,13 @@ public class StockFragment extends Fragment {
 
                 if (switchPref.equals(getString(R.string.asc))){
                     adapter.sortStocksAsc(stocks);
-                }else
+                }else if(switchPref.equals(getString(R.string.desc))){
                     adapter.sortStocksDesc(stocks);
+                }else if(switchPref.equals(getString(R.string.high))){
+                    adapter.sortStocksLatestPriceHigh(stocks);
+                }else if(switchPref.equals(getString(R.string.low))){
+                    adapter.sortStocksLatestPriceLow(stocks);
+                }
             }
         });
 
@@ -137,8 +142,7 @@ public class StockFragment extends Fragment {
         }
         else {
             setHasOptionsMenu(false);
-            //TODO
-            Toast.makeText(getActivity(), "No Internet Connection - Cannot add a stock", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.no_internet_stock, Toast.LENGTH_LONG).show();
         }
 
         ItemTouchHelper helper = new ItemTouchHelper(

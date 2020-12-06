@@ -94,8 +94,7 @@ public class CompareFragment extends Fragment {
         });
 
         }else {
-            //TODO
-            Toast.makeText(getActivity(), "No Internet Connection - Cannot compare two stocks", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.no_internet_compare, Toast.LENGTH_LONG).show();
         }
 
         return root;

@@ -355,7 +355,6 @@ class Repository {
                         }
 
                     } else
-                        //TODO "Can't compare"
                         Log.i(TAG, "Can't compare");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

@@ -17,6 +17,7 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
@@ -177,6 +178,44 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     }
 
     /**
+     * Arrange the dataset of the Adapter in an latest price highest order
+     * @param stocks containing the data to populate views to be used
+     * by RecyclerView.
+     */
+    public void sortStocksLatestPriceHigh(List<Stock> stocks){
+        Collections.sort(stocks, new Comparator<Stock>() {
+            public int compare(Stock s1, Stock s2) {
+                Double d1 = Double.parseDouble(s1.getLatestPrice());
+                Double d2 = Double.parseDouble(s2.getLatestPrice());
+                int i1 = d1.intValue();
+                int i2 = d2.intValue();
+                return i1 - i2;
+            }
+        }.reversed());
+        mStocks = stocks;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Arrange the dataset of the Adapter in an latest price lowest order
+     * @param stocks containing the data to populate views to be used
+     * by RecyclerView.
+     */
+    public void sortStocksLatestPriceLow(List<Stock> stocks){
+        Collections.sort(stocks, new Comparator<Stock>() {
+            public int compare(Stock s1, Stock s2) {
+                Double d1 = Double.parseDouble(s1.getLatestPrice());
+                Double d2 = Double.parseDouble(s2.getLatestPrice());
+                int i1 = d1.intValue();
+                int i2 = d2.intValue();
+                return i1 - i2;
+            }
+        });
+        mStocks = stocks;
+        notifyDataSetChanged();
+    }
+
+    /**
      * Get the stock from the Recylerview
      * @param position of the stock in List<Stock>
      * @return a stock
@@ -195,5 +234,6 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             return mStocks.size();
         else return 0;
     }
+
 
 }
