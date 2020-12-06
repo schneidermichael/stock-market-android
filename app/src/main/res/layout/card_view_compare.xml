@@ -7,10 +7,11 @@
     android:orientation="horizontal"
     android:padding="20dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_weight="1"
         android:textSize="18sp" />
 
@@ -18,6 +19,7 @@
         android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimary"
         android:src="@drawable/ic_baseline_check"
         android:visibility="gone" />
 
