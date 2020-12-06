@@ -148,11 +148,10 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             ViewCompat.setBackground(holder.textViewChangePercent,shapeDrawable);
 
         } else {
-
-            holder.textViewSymbol.setText("No Word");
-            holder.textViewCompanyName.setText("No Word");
-            holder.textViewLatestPrice.setText("No Word");
-            holder.textViewSymbol.setText("No Word");
+            holder.textViewSymbol.setText(R.string.no_word);
+            holder.textViewCompanyName.setText(R.string.no_word);
+            holder.textViewLatestPrice.setText(R.string.no_word);
+            holder.textViewSymbol.setText(R.string.no_word);
         }
     }
 

@@ -93,8 +93,7 @@ public class SearchActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-                Toast.makeText(SearchActivity.this, "No Data available", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(SearchActivity.this, R.string.no_data, Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -108,7 +107,7 @@ public class SearchActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setIconified(false);
         
-        searchView.setQueryHint("Type a stocks symbol");
+        searchView.setQueryHint(getString(R.string.search_field));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 

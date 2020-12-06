@@ -102,8 +102,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             holder.textViewCompanyName.setText(current.getCompanyName());
 
         } else {
-            holder.textViewSymbol.setText("No Word");
-            holder.textViewCompanyName.setText("No Word");
+            holder.textViewSymbol.setText(R.string.no_word);
+            holder.textViewCompanyName.setText(R.string.no_word);
         }
     }
 

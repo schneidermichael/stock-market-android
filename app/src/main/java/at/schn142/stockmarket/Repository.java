@@ -35,7 +35,7 @@ import at.schn142.stockmarket.model.StockRange;
  */
 class Repository {
 
-    public static final String TAG = "Repository";
+    public static final String TAG = Repository.class.getName();
 
     private StockDao mStockDao;
 
@@ -198,7 +198,8 @@ class Repository {
                         if (postList.isEmpty() || postList.size() < 1) {
                             postList.clear();
                             if (!searchQuery.isEmpty()) {
-                                postList.add((new Stock("", "No results for \"" + searchQuery + "\"")));
+
+                            postList.add((new Stock("", "No results for \"" + searchQuery + "\"")));
                             }
                         }
                         mSearchStocks.postValue(postList);
@@ -354,8 +355,8 @@ class Repository {
                         }
 
                     } else
+                        //TODO "Can't compare"
                         Log.i(TAG, "Can't compare");
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

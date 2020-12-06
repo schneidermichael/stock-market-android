@@ -100,7 +100,7 @@ public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHold
             });
 
         }else{
-            holder.textView.setText("No Word");
+            holder.textView.setText(R.string.no_word);
             holder.imageView.setVisibility(View.GONE);
         }
 

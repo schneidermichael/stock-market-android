@@ -27,7 +27,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        // Indicate here the XML resource you created above that holds the preferences
         setPreferencesFromResource(R.xml.preferences, rootKey);
     }
 
@@ -38,7 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mViewModel = new ViewModelProvider(this).get(ViewModel.class);
         builder = new AlertDialog.Builder(getContext());
 
-        Preference preference = findPreference("deleteAllStocks");
+        Preference preference = findPreference(getString(R.string.delete_all));
         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preferenceClick) {

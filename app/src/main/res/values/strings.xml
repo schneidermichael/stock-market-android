@@ -46,11 +46,27 @@
 
     <!-- Settings -->
     <string name="preference_delete_all">Delete All Stocks</string>
-    <string name="pref_sort">Sortierung</string>
+    <string name="preference_sort">Sortierung</string>
 
     <!-- SettingsFragment -->
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_delete_all_message">Do you want to delete all stocks?</string>
+
+    <!-- Repository -->
+    <string name="message_comapre">Can\'t compare</string>
+
+    <string name="no_word">No Word</string>
+    <string name="no_data">No Data available</string>
+    <string name="search_field">Type a stocks symbol</string>
+    <string name="cartesian_title">5 Years Chart</string>
+    <string name="cartesian_axis">Value in [$]</string>
+    <string name="pref_sort">pref_sort</string>
+    <string name="asc">asc</string>
+    <string name="deleting">Deleting </string>
+    <string name="update_all">Update all stocks</string>
+    <string name="delete_all">deleteAllStocks</string>
+    <string name="no_selection">No selection</string>
+    <string name="one_selection">Only one selection</string>
 
 </resources>

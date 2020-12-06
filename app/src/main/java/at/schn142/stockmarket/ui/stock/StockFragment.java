@@ -63,7 +63,7 @@ public class StockFragment extends Fragment {
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String switchPref = sharedPref.getString("pref_sort","asc");
+        String switchPref = sharedPref.getString(getString(R.string.pref_sort),getString(R.string.asc));
 
         recyclerView =  (RecyclerView) root.findViewById(R.id.recycler_view_stock);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -83,7 +83,7 @@ public class StockFragment extends Fragment {
             @Override
             public void onChanged(List<Stock> stocks) {
 
-                if (switchPref.equals("asc")){
+                if (switchPref.equals(getString(R.string.asc))){
                     adapter.sortStocksAsc(stocks);
                 }else
                     adapter.sortStocksDesc(stocks);
@@ -109,8 +109,6 @@ public class StockFragment extends Fragment {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "https://finance.yahoo.com/quote/"+stock.getSymbol());
                 sendIntent.setType("text/plain");
-
-                //sendIntent.setPackage("com.whatsapp");
 
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
@@ -144,7 +142,8 @@ public class StockFragment extends Fragment {
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Stock stock = adapter.getStockAtPosition(position);
-                        Toast.makeText(getActivity(), "Deleting " +
+
+                        Toast.makeText(getActivity(), R.string.deleting +
                                 stock.getCompanyName(), Toast.LENGTH_LONG).show();
 
 
@@ -163,10 +162,9 @@ public class StockFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.refresh) {
-            // Add a toast just for confirmation
 
             mViewModel.updateAll();
-            Toast.makeText(getActivity(), "Update all stocks", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.update_all, Toast.LENGTH_SHORT).show();
 
         }
 

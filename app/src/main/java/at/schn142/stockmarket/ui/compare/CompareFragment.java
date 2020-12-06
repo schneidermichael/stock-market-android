@@ -34,6 +34,7 @@ import at.schn142.stockmarket.model.Stock;
  */
 public class CompareFragment extends Fragment {
 
+
     public static final String SYMBOLONE = "at.schn142.stockmarket.ui.compare.SYMBOLONE";
     public static final String SYMBOLTWO = "at.schn142.stockmarket.ui.compare.SYMBOLTWO";
 
@@ -80,9 +81,9 @@ public class CompareFragment extends Fragment {
                     view.getContext().startActivity(intent);
                 }
                 else if(adapter.getSelected().size() == 0){
-                    Toast.makeText(getActivity(), "No selection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.no_selection, Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getActivity(), "Only one selection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.one_selection, Toast.LENGTH_SHORT).show();
                 }
             }
         });

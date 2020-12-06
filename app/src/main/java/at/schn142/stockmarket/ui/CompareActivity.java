@@ -66,9 +66,9 @@ public class CompareActivity extends AppCompatActivity {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("5 Years Chart");
+        cartesian.title(getString(R.string.cartesian_title));
 
-        cartesian.yAxis(0).title("Value in [$]");
+        cartesian.yAxis(0).title(getString(R.string.cartesian_axis));
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
