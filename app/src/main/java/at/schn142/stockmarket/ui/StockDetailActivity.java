@@ -16,6 +16,7 @@ import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
@@ -52,6 +53,17 @@ public class StockDetailActivity extends AppCompatActivity {
     private Stock stock;
     private Plot plot;
 
+    private MaterialTextView valueOpen;
+    private MaterialTextView valueHigh;
+    private MaterialTextView valueLow;
+    private MaterialTextView valueVol;
+    private MaterialTextView valuePE;
+    private MaterialTextView valueMkt;
+    private MaterialTextView valueWH;
+    private MaterialTextView valueWL;
+    private MaterialTextView valueAvg;
+
+    private at.schn142.stockmarket.model.Stock detailStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +87,32 @@ public class StockDetailActivity extends AppCompatActivity {
         buttonTwoYear = findViewById(R.id.button_two_year);
         buttonFiveYear = findViewById(R.id.button_five_year);
 
+        valueOpen = findViewById(R.id.value_Open);
+        valueHigh = findViewById(R.id.value_High);
+        valueLow = findViewById(R.id.value_Low);
+        valueVol = findViewById(R.id.value_Vol);
+        valuePE = findViewById(R.id.value_PE);
+        valueMkt = findViewById(R.id.value_Mkt);
+        valueWH = findViewById(R.id.value_WH);
+        valueWL = findViewById(R.id.value_WL);
+        valueAvg = findViewById(R.id.value_Avg);
+
         range = StockRange.fiveDay;
 
         mViewModel.getOLHCDataEntry(symbol, range);
+
+        detailStock = mViewModel.searchStock(symbol);
+
+        valueOpen.setText(Double.toString(detailStock.getOpen()));
+        valueHigh.setText(Double.toString(detailStock.getHigh()));
+        valueLow.setText(Double.toString(detailStock.getLow()));
+        valueVol.setText(Double.toString(detailStock.getVolume()));
+        valuePE.setText(Double.toString(detailStock.getPeRatio()));
+        valueMkt.setText(Double.toString(detailStock.getMarketCap()));
+        valueWH.setText(Double.toString(detailStock.getWeekHigh()));
+        valueWL.setText(Double.toString(detailStock.getWeekLow()));
+        valueAvg.setText(Double.toString(detailStock.getAvgTotalVolume()));
+
 
         toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
 
@@ -129,6 +164,8 @@ public class StockDetailActivity extends AppCompatActivity {
                 table.addData(dataEntries);
             }
         });
+
+
 
         mapping = table.mapAs("{open: 'open', high: 'high', low: 'low', close: 'close'}");
 

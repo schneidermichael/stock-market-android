@@ -406,10 +406,20 @@ class Repository {
                     JSONObject object = new JSONObject(response);
 
                     Stock stock = new Stock(object.getString("symbol"),
-                            object.getString("companyName"),
-                            object.getString("latestPrice"),
-                            object.getString("changePercent")
-                    );
+                            object.optString("companyName"),
+                            object.optDouble("open"),
+                            object.optDouble("close"),
+                            object.optDouble("high"),
+                            object.optDouble("low"),
+                            object.optString("latestPrice"),
+                            object.optString("changePercent"),
+                            object.optDouble("volume"),
+                            object.optDouble("avgTotalVolume"),
+                            object.optDouble("marketCap"),
+                            object.optDouble("peRatio"),
+                            object.optDouble("week52High"),
+                            object.optDouble("week52Low")
+                            );
 
                     mStock = stock;
 
@@ -475,4 +485,11 @@ class Repository {
         });
     }
 
+    /**
+     * Get all stock details per API
+     * @param symbol of stock
+     */
+    public void getStockDetailData(String symbol) {
+
+    }
 }

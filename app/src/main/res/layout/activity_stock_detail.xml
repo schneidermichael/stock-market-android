@@ -61,8 +61,8 @@
     <com.anychart.AnyChartView
         android:id="@+id/any_chart_view_stock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_height="520dp"
+        android:layout_marginTop="45dp">
 
         <ProgressBar
             android:id="@+id/progress_bar_stock"
@@ -71,6 +71,210 @@
             android:layout_gravity="center"/>
     </com.anychart.AnyChartView>
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/horizontal_scroll_view"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_open"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_high"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_high"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_low"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="?android:attr/listDivider">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_Open"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_Open"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_High"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_High"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_Low"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_Low"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_vol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_vol"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_PE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_PE"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_Mkt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_Mkt"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="?android:attr/listDivider">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_Vol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_Vol"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_PE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_PE"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_Mkt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_Mkt"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_WH"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_WH"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_WL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_WL"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_Avg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/text_Avg"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="?android:attr/listDivider">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_WH"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_WH"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_WL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_WL"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/value_Avg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/value_Avg"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
 
 </RelativeLayout>

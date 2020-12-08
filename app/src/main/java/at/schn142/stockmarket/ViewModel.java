@@ -80,5 +80,4 @@ public class ViewModel extends AndroidViewModel {
     public List<DataEntry> getLineChartData(String symbolOne, String symbolTwo) {
         return mRepository.getLineChartData(symbolOne, symbolTwo);
     }
-
 }

@@ -81,7 +81,6 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) throws InterruptedException {
                 Stock stock = adapter.getStockAtPosition(position);
                 if (!stock.getSymbol().equalsIgnoreCase("")) {
-
                     Stock newStock = mViewModel.searchStock(stock.getSymbol());
                     if (newStock != null) {
                         Log.d(TAG, stock.getCompanyName());
@@ -97,7 +96,6 @@ public class SearchActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-                Toast.makeText(SearchActivity.this, R.string.no_data, Toast.LENGTH_SHORT).show();
             }
 
         });

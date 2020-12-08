@@ -78,5 +78,23 @@
     <string name="one_selection">Only one selection</string>
     <string name="no_internet_compare">No Internet Connection - Cannot compare two stocks</string>
     <string name="no_internet_stock">No Internet Connection - Cannot add a stock</string>
+    <string name="text_open">Open</string>
+    <string name="text_high">High</string>
+    <string name="text_low">Low</string>
+    <string name="text_vol">Vol</string>
+    <string name="text_PE">P/E</string>
+    <string name="text_Mkt">Mkt Cap</string>
+    <string name="text_WH">52W H</string>
+    <string name="text_WL">52W L</string>
+    <string name="text_Avg">Avg Vol</string>
+    <string name="value_Open">Open</string>
+    <string name="value_High">High</string>
+    <string name="value_Low">Low</string>
+    <string name="value_Vol">Vol</string>
+    <string name="value_PE">PE</string>
+    <string name="value_Mkt">Mkt</string>
+    <string name="value_WH">WH</string>
+    <string name="value_WL">WL</string>
+    <string name="value_Avg">Avg</string>
 
 </resources>

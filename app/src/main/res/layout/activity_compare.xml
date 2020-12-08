@@ -17,5 +17,4 @@
             android:layout_gravity="center"/>
     </com.anychart.AnyChartView>
 
-
 </RelativeLayout>

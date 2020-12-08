@@ -20,7 +20,7 @@ import at.schn142.stockmarket.model.Stock;
  * @author michaelschneider
  * @version 1.0
  */
-@Database(entities = {Stock.class}, version = 5, exportSchema = false)
+@Database(entities = {Stock.class}, version = 6, exportSchema = false)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
     public abstract StockDao stockDao();
