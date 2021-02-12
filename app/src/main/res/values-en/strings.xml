@@ -52,6 +52,26 @@
     <string name="highest">Highest Value</string>
     <string name="lowest">Lowest Value</string>
 
+    <string name="five_year">5 Years</string>
+    <string name="two_year">2 Years</string>
+    <string name="one_year">1 Year</string>
+    <string name="six_month">6 Months</string>
+    <string name="three_month">3 Months</string>
+    <string name="one_month">1 Month</string>
+    <string name="five_day">5 Days</string>
+
+    <string name="fiveY">5Y</string>
+    <string name="twoY">2Y</string>
+    <string name="oneY">1Y</string>
+    <string name="sixM">6M</string>
+    <string name="threeM">3M</string>
+    <string name="oneM">1M</string>
+    <string name="fiveD">5D</string>
+
+    <string name="preference_graphic">Show Chart for</string>
+
+    <string name="pref_chart">pref_chart</string>
+
     <!-- SettingsFragment -->
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>

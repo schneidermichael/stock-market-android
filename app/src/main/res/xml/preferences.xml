@@ -16,4 +16,12 @@
         android:title="@string/preference_sort"
         android:summary="%s"/>
 
+    <ListPreference
+        android:defaultValue="2Y"
+        android:entries="@array/pref_chart_titles"
+        android:entryValues="@array/pref_chart_values"
+        android:key="pref_chart"
+        android:title="@string/preference_graphic"
+        android:summary="%s"/>
+
 </PreferenceScreen>

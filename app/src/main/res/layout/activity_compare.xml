@@ -1,20 +1,382 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
+    tools:context=".ui.CompareStocksFragment">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/any_chart_view_compare"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="65dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/progress_bar_compare"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-    </com.anychart.AnyChartView>
+            android:padding="5dp"
+            android:text="@string/text_open"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
 
-</RelativeLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_high"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_low"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_vol"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_PE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_PE"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_Mkt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_Mkt"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_WH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_WH"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_WL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_WL"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol1_Avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_Avg"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Open"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_high"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_High"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_low"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Low"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_vol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Vol"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_PE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_PE"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_Mkt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Mkt"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_WH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_WH"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_WL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_WL"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol1_Avg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Avg"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="65dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_open"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_high"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_low"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_vol"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_PE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_PE"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_Mkt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_Mkt"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_WH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_WH"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_WL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_WL"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_symbol2_Avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_Avg"
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Open"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_high"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_High"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_low"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Low"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_vol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Vol"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_PE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_PE"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_Mkt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Mkt"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_WH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_WH"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_WL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_WL"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value_symbol2_Avg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/value_Avg"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

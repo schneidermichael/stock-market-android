@@ -12,4 +12,24 @@
         <item>high</item>
         <item>low</item>
     </string-array>
+
+    <string-array name="pref_chart_titles">
+        <item>@string/five_year</item>
+        <item>@string/two_year</item>
+        <item>@string/one_year</item>
+        <item>@string/six_month</item>
+        <item>@string/three_month</item>
+        <item>@string/one_month</item>
+        <item>@string/five_day</item>
+    </string-array>
+
+    <string-array name="pref_chart_values">
+        <item>5Y</item>
+        <item>2Y</item>
+        <item>1Y</item>
+        <item>6M</item>
+        <item>3M</item>
+        <item>1M</item>
+        <item>5D</item>
+    </string-array>
 </resources>

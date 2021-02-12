@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import at.schn142.stockmarket.dao.StockDao;
-import at.schn142.stockmarket.model.LineDataEntry;
 import at.schn142.stockmarket.model.OLHCDataEntry;
 import at.schn142.stockmarket.model.Stock;
 import at.schn142.stockmarket.model.StockRange;
@@ -302,81 +301,6 @@ class Repository {
         }
         thread = new Thread(runnable);
         thread.start();
-
-    }
-
-    /**
-     * Generate a List for the LineChartData
-     * @param symbolOne for this stock
-     * @param symbolTwo for this stock
-     * @return List<DataEntry>
-     */
-    public List<DataEntry> getLineChartData(String symbolOne, String symbolTwo) {
-
-        List<DataEntry> data = new ArrayList<>();
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    URL symbolOneUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbolOne + "/chart/" + StockRange.fiveYear.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
-                    URL symbolTwoUrl = new URL("https://sandbox.iexapis.com/stable/stock/" + symbolTwo + "/chart/" + StockRange.fiveYear.getText() + "?token=Tsk_88f94b01307d4faba605e2ebbb5a71ae");
-
-                    String responseSymbolOne = "";
-                    String responseSymbolTwo = "";
-                    try {
-                        responseSymbolOne = getResponseFromHttpUrl(symbolOneUrl);
-                        responseSymbolTwo = getResponseFromHttpUrl(symbolTwoUrl);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    JSONArray arrayOne = new JSONArray(responseSymbolOne);
-                    JSONArray arrayTwo = new JSONArray(responseSymbolTwo);
-
-                    JSONObject objectOne;
-                    JSONObject objectTwo;
-
-                    if (arrayOne.length() == arrayTwo.length()) {
-
-                        for (int i = 0; i < arrayOne.length(); i++) {
-
-                            //Array1
-                            objectOne = (JSONObject) arrayOne.get(i);
-                            String stringDate = objectOne.getString("date");
-                            Double closeOne = objectOne.getDouble("close");
-
-                            //Array2
-                            objectTwo = (JSONObject) arrayTwo.get(i);
-                            Double closeTwo = objectTwo.getDouble("close");
-
-                            data.add(new LineDataEntry(stringDate, closeOne, closeTwo));
-                        }
-
-                    } else
-                        Log.i(TAG, "Can't compare");
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        if (thread != null) {
-            thread.interrupt();
-        }
-        thread = new Thread(runnable);
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return data;
 
     }
 

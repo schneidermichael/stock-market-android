@@ -24,6 +24,7 @@ import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
 import static android.graphics.Color.rgb;
+import static at.schn142.stockmarket.utilities.AppUtils.checkStringAvailable;
 
 /**
  * This class represents StockAdapter for the class StockFragment
@@ -124,8 +125,8 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         if (mStocks != null) {
             Stock current = mStocks.get(position);
 
-            holder.textViewSymbol.setText(current.getSymbol());
-            holder.textViewCompanyName.setText(current.getCompanyName());
+            holder.textViewSymbol.setText(checkStringAvailable(current.getSymbol()));
+            holder.textViewCompanyName.setText(checkStringAvailable(current.getCompanyName()));
             holder.textViewLatestPrice.setText(current.getLatestPrice());
 
             String changePercent = "0.00";

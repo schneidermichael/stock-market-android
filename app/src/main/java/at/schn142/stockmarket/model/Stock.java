@@ -1,14 +1,10 @@
 package at.schn142.stockmarket.model;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.TransitionRes;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import kotlin.jvm.Transient;
-
 
 /**
  * This class represents Stock

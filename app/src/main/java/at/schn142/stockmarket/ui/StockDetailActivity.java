@@ -1,10 +1,12 @@
 package at.schn142.stockmarket.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -23,6 +25,7 @@ import java.util.List;
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.StockRange;
 import at.schn142.stockmarket.ViewModel;
+import at.schn142.stockmarket.utilities.AppUtils;
 
 /**
  * This class represents StockDetailActivity
@@ -38,14 +41,6 @@ public class StockDetailActivity extends AppCompatActivity {
 
     private ViewModel mViewModel;
 
-    private MaterialButtonToggleGroup toggleGroup;
-    private MaterialButton buttonFiveDay;
-    private MaterialButton buttonOneMonth;
-    private MaterialButton buttonThreeMonth;
-    private MaterialButton buttonSixMonth;
-    private MaterialButton buttonOneYear;
-    private MaterialButton buttonTwoYear;
-    private MaterialButton buttonFiveYear;
     private StockRange range;
     private Table table;
     private AnyChartView anyChartView;
@@ -74,18 +69,14 @@ public class StockDetailActivity extends AppCompatActivity {
         String symbol = extras.getString(SYMBOL);
         String companyName = extras.getString(COMPANYNAME);
 
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(this);
+
+        String switchPref = sharedPref.getString(getString(R.string.pref_chart), getString(R.string.fiveY));
+
         setTitle(companyName);
 
         mViewModel = new ViewModelProvider(this).get(ViewModel.class);
-
-        toggleGroup = findViewById(R.id.toggle_button_group);
-        buttonFiveDay = findViewById(R.id.button_five_day);
-        buttonOneMonth = findViewById(R.id.button_one_month);
-        buttonThreeMonth = findViewById(R.id.button_three_month);
-        buttonSixMonth = findViewById(R.id.button_six_month);
-        buttonOneYear = findViewById(R.id.button_one_year);
-        buttonTwoYear = findViewById(R.id.button_two_year);
-        buttonFiveYear = findViewById(R.id.button_five_year);
 
         valueOpen = findViewById(R.id.value_Open);
         valueHigh = findViewById(R.id.value_High);
@@ -97,59 +88,36 @@ public class StockDetailActivity extends AppCompatActivity {
         valueWL = findViewById(R.id.value_WL);
         valueAvg = findViewById(R.id.value_Avg);
 
+
         range = StockRange.fiveDay;
 
-        mViewModel.getOLHCDataEntry(symbol, range);
+        if (switchPref.equals(getString(R.string.fiveY))) {
+            range = StockRange.fiveYear;
+        } else if (switchPref.equals(getString(R.string.twoY))) {
+            range = StockRange.twoYear;
+        } else if (switchPref.equals(getString(R.string.oneY))) {
+            range = StockRange.oneYear;
+        } else if (switchPref.equals(getString(R.string.sixM))) {
+            range = StockRange.sixMonth;
+        } else if (switchPref.equals(getString(R.string.threeM))) {
+            range = StockRange.threeMonth;
+        } else if (switchPref.equals(getString(R.string.oneM))) {
+            range = StockRange.oneMonth;
+        } else if (switchPref.equals(getString(R.string.fiveD))) {
+            range = StockRange.fiveDay;
+        }
 
         detailStock = mViewModel.searchStock(symbol);
 
-        valueOpen.setText(Double.toString(detailStock.getOpen()));
-        valueHigh.setText(Double.toString(detailStock.getHigh()));
-        valueLow.setText(Double.toString(detailStock.getLow()));
-        valueVol.setText(Double.toString(detailStock.getVolume()));
-        valuePE.setText(Double.toString(detailStock.getPeRatio()));
-        valueMkt.setText(Double.toString(detailStock.getMarketCap()));
-        valueWH.setText(Double.toString(detailStock.getWeekHigh()));
-        valueWL.setText(Double.toString(detailStock.getWeekLow()));
-        valueAvg.setText(Double.toString(detailStock.getAvgTotalVolume()));
-
-
-        toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-
-                if(checkedId == buttonFiveDay.getId() && isChecked == true){
-
-                    range = StockRange.fiveDay;
-
-                }else if (checkedId == buttonOneMonth.getId() && isChecked == true){
-
-                    range = StockRange.oneMonth;
-
-                }else if (checkedId == buttonThreeMonth.getId() && isChecked == true){
-
-                    range = StockRange.threeMonth;
-
-                }else if (checkedId == buttonSixMonth.getId() && isChecked == true){
-
-                    range = StockRange.sixMonth;
-
-                }else if (checkedId == buttonOneYear.getId() && isChecked == true){
-
-                    range = StockRange.oneYear;
-
-                }else if (checkedId == buttonTwoYear.getId() && isChecked == true){
-
-                    range = StockRange.twoYear;
-
-                }else if (checkedId == buttonFiveYear.getId() && isChecked == true){
-
-                    range = StockRange.fiveYear;
-                }
-                mViewModel.getOLHCDataEntry(symbol, range);
-            }
-        });
+        valueOpen.setText(AppUtils.checkNull(detailStock.getOpen()));
+        valueHigh.setText(AppUtils.checkNull(detailStock.getHigh()));
+        valueLow.setText(AppUtils.checkNull(detailStock.getLow()));
+        valueVol.setText(AppUtils.checkNull(detailStock.getVolume()));
+        valuePE.setText(AppUtils.checkNull(detailStock.getPeRatio()));
+        valueMkt.setText(AppUtils.checkNull(detailStock.getMarketCap()));
+        valueWH.setText(AppUtils.checkNull(detailStock.getWeekHigh()));
+        valueWL.setText(AppUtils.checkNull(detailStock.getWeekLow()));
+        valueAvg.setText(AppUtils.checkNull(detailStock.getAvgTotalVolume()));
 
         anyChartView = findViewById(R.id.any_chart_view_stock);
         anyChartView.setProgressBar(findViewById(R.id.progress_bar_stock));
@@ -159,14 +127,12 @@ public class StockDetailActivity extends AppCompatActivity {
         mViewModel.getData().observe(this, new Observer<List<DataEntry>>() {
             @Override
             public void onChanged(List<DataEntry> dataEntries) {
-                //Funktioniert leider nicht rückwärts
-                APIlib.getInstance().setActiveAnyChartView(anyChartView);
                 table.addData(dataEntries);
 
             }
         });
 
-
+        mViewModel.getOLHCDataEntry(symbol, range);
 
         mapping = table.mapAs("{open: 'open', high: 'high', low: 'low', close: 'close'}");
 

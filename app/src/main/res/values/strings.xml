@@ -51,6 +51,26 @@
     <string name="highest">Höchster Preis</string>
     <string name="lowest">Niedrigster Preis</string>
 
+    <string name="five_year">5 Jahre</string>
+    <string name="two_year">2 Jahre</string>
+    <string name="one_year">1 Jahr</string>
+    <string name="six_month">6 Monate</string>
+    <string name="three_month">3 Monate</string>
+    <string name="one_month">1 Monat</string>
+    <string name="five_day">5 Tage</string>
+
+    <string name="fiveY">5Y</string>
+    <string name="twoY">2Y</string>
+    <string name="oneY">1Y</string>
+    <string name="sixM">6M</string>
+    <string name="threeM">3M</string>
+    <string name="oneM">1M</string>
+    <string name="fiveD">5D</string>
+
+    <string name="preference_graphic">Zeitraum für Chart</string>
+
+    <string name="pref_chart">pref_chart</string>
+
     <!-- SettingsFragment -->
     <string name="dialog_yes">Ja</string>
     <string name="dialog_no">Nein</string>

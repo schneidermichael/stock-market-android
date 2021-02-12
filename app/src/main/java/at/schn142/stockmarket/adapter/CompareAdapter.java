@@ -17,6 +17,8 @@ import java.util.List;
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.model.Stock;
 
+import static at.schn142.stockmarket.utilities.AppUtils.checkStringAvailable;
+
 /**
  * This class represents CompareAdapter for the class CompareFragment
  *
@@ -82,7 +84,7 @@ public class CompareAdapter extends RecyclerView.Adapter<CompareAdapter.ViewHold
             Stock current = mStocks.get(position);
 
             holder.imageView.setVisibility(current.isChecked() ? View.VISIBLE : View.GONE);
-            holder.textView.setText(current.getCompanyName());
+            holder.textView.setText(checkStringAvailable(current.getCompanyName()));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -16,12 +16,15 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import at.schn142.stockmarket.R;
 import at.schn142.stockmarket.ViewModel;
+import at.schn142.stockmarket.model.Stock;
+import at.schn142.stockmarket.utilities.AppUtils;
 
 /**
  * This class represents CompareActivity
@@ -37,6 +40,26 @@ public class CompareActivity extends AppCompatActivity {
 
     private ViewModel mViewModel;
 
+    private MaterialTextView valueOpen1;
+    private MaterialTextView valueHigh1;
+    private MaterialTextView valueLow1;
+    private MaterialTextView valueVol1;
+    private MaterialTextView valuePE1;
+    private MaterialTextView valueMkt1;
+    private MaterialTextView valueWH1;
+    private MaterialTextView valueWL1;
+    private MaterialTextView valueAvg1;
+
+    private MaterialTextView valueOpen2;
+    private MaterialTextView valueHigh2;
+    private MaterialTextView valueLow2;
+    private MaterialTextView valueVol2;
+    private MaterialTextView valuePE2;
+    private MaterialTextView valueMkt2;
+    private MaterialTextView valueWH2;
+    private MaterialTextView valueWL2;
+    private MaterialTextView valueAvg2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,64 +73,52 @@ public class CompareActivity extends AppCompatActivity {
 
         mViewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        AnyChartView anyChartView = findViewById(R.id.any_chart_view_compare);
-        anyChartView.setProgressBar(findViewById(R.id.progress_bar_compare));
+        valueOpen1 = findViewById(R.id.value_symbol1_open);
+        valueHigh1  = findViewById(R.id.value_symbol1_high);
+        valueLow1  = findViewById(R.id.value_symbol1_low);
+        valueVol1  = findViewById(R.id.value_symbol1_vol);
+        valuePE1  = findViewById(R.id.value_symbol1_PE);
+        valueMkt1  = findViewById(R.id.value_symbol1_Mkt);
+        valueWH1  = findViewById(R.id.value_symbol1_WH);
+        valueWL1  = findViewById(R.id.value_symbol1_WL);
+        valueAvg1  = findViewById(R.id.value_symbol1_Avg);
 
-        Cartesian cartesian = AnyChart.line();
+        valueOpen2  = findViewById(R.id.value_symbol2_open);
+        valueHigh2  = findViewById(R.id.value_symbol2_high);
+        valueLow2  = findViewById(R.id.value_symbol2_low);
+        valueVol2  = findViewById(R.id.value_symbol2_vol);
+        valuePE2  = findViewById(R.id.value_symbol2_PE);
+        valueMkt2  = findViewById(R.id.value_symbol2_Mkt);
+        valueWH2  = findViewById(R.id.value_symbol2_WH);
+        valueWL2  = findViewById(R.id.value_symbol2_WL);
+        valueAvg2 = findViewById(R.id.value_symbol2_Avg);
 
-        cartesian.animation(true);
 
-        cartesian.padding(10d, 20d, 5d, 20d);
+        Stock symbolOneStock = mViewModel.searchStock(symbolOne);
 
-        cartesian.crosshair().enabled(true);
-        cartesian.crosshair()
-                .yLabel(true)
-                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+        Stock symbolTwoStock = mViewModel.searchStock(symbolTwo);
 
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        valueOpen1.setText(AppUtils.checkNull(symbolOneStock.getOpen()));
+        valueHigh1.setText(AppUtils.checkNull(symbolOneStock.getHigh()));
+        valueLow1.setText(AppUtils.checkNull(symbolOneStock.getLow()));
+        valueVol1.setText(AppUtils.checkNull(symbolOneStock.getVolume()));
+        valuePE1.setText(AppUtils.checkNull(symbolOneStock.getPeRatio()));
+        valueMkt1.setText(AppUtils.checkNull(symbolOneStock.getMarketCap()));
+        valueWH1.setText(AppUtils.checkNull(symbolOneStock.getWeekHigh()));
+        valueWL1.setText(AppUtils.checkNull(symbolOneStock.getWeekLow()));
+        valueAvg1.setText(AppUtils.checkNull(symbolOneStock.getAvgTotalVolume()));
 
-        cartesian.title(getString(R.string.cartesian_title));
+        valueOpen2.setText(AppUtils.checkNull(symbolTwoStock.getOpen()));
+        valueHigh2.setText(AppUtils.checkNull(symbolTwoStock.getHigh()));
+        valueLow2.setText(AppUtils.checkNull(symbolTwoStock.getLow()));
+        valueVol2.setText(AppUtils.checkNull(symbolTwoStock.getVolume()));
+        valuePE2.setText(AppUtils.checkNull(symbolTwoStock.getPeRatio()));
+        valueMkt2.setText(AppUtils.checkNull(symbolTwoStock.getMarketCap()));
+        valueWH2.setText(AppUtils.checkNull(symbolTwoStock.getWeekHigh()));
+        valueWL2.setText(AppUtils.checkNull(symbolTwoStock.getWeekLow()));
+        valueAvg2.setText(AppUtils.checkNull(symbolTwoStock.getAvgTotalVolume()));
 
-        cartesian.yAxis(0).title(getString(R.string.cartesian_axis));
-        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
-        List<DataEntry> seriesData = new ArrayList<>();
 
-        seriesData = mViewModel.getLineChartData(symbolOne,symbolOne);
-
-        Set set = Set.instantiate();
-        set.data(seriesData);
-        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-        Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
-
-        Line series1 = cartesian.line(series1Mapping);
-        series1.name(symbolOne);
-        series1.hovered().markers().enabled(true);
-        series1.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series1.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        Line series2 = cartesian.line(series2Mapping);
-        series2.name(symbolTwo);
-        series2.hovered().markers().enabled(true);
-        series2.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series2.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        cartesian.legend().enabled(true);
-        cartesian.legend().fontSize(13d);
-        cartesian.legend().padding(0d, 0d, 10d, 0d);
-
-        anyChartView.setChart(cartesian);
     }
 }
