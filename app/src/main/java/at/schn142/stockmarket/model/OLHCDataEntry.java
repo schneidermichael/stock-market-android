@@ -24,3 +24,6 @@ public class OLHCDataEntry extends HighLowDataEntry {
         setValue("close", close);
     }
 }
+
+
+

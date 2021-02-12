@@ -48,7 +48,6 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-        private CardView cardView;
         private TextView textViewSymbol;
         private TextView textViewCompanyName;
         private TextView textViewLatestPrice;
@@ -61,7 +60,6 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            cardView = itemView.findViewById(R.id.stock_card_view);
             textViewSymbol = (TextView) itemView.findViewById(R.id.stock_card_text_view_symbol);
             textViewCompanyName = (TextView) itemView.findViewById(R.id.stock_card_text_view_company_name);
             textViewLatestPrice = (TextView) itemView.findViewById(R.id.stock_card_text_view_latest_price);

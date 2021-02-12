@@ -52,7 +52,6 @@
     <string name="highest">Highest Value</string>
     <string name="lowest">Lowest Value</string>
 
-
     <!-- SettingsFragment -->
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>

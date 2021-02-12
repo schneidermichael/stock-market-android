@@ -162,6 +162,7 @@ public class StockDetailActivity extends AppCompatActivity {
                 //Funktioniert leider nicht rückwärts
                 APIlib.getInstance().setActiveAnyChartView(anyChartView);
                 table.addData(dataEntries);
+
             }
         });
 
